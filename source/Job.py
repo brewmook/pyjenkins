@@ -31,20 +31,22 @@ class Job(IJob):
 
     def exists(self):
         result= True
-        (text, returnCode) = self._getUrl()
+        url= self._jobUrl()
+        (text, returnCode) = self.http.getUrl(url)
         if returnCode != Http.OK:
             result= False
         return result
 
     def configurationXml(self):
-        (result, returnCode) = self._getUrl(['config.xml'])
+        url= self._jobUrl(['config.xml'])
+        (result, returnCode) = self.http.getUrl(url)
         if returnCode != Http.OK:
             result= ''
         return result
 
     def setConfigurationXml(self, configurationXml):
         result= True
-        url= '/'.join([self.host, 'job', self.name, 'config.xml'])
+        url= self._jobUrl(['config.xml'])
 
         (content, returnCode) = self.http.post(url, configurationXml)
         if returnCode != Http.OK:
@@ -66,6 +68,5 @@ class Job(IJob):
             
         return result
 
-    def _getUrl(self, extraPathElements = []):
-        url= '/'.join([self.host, self.name] + extraPathElements)
-        return self.http.getUrl(url)
+    def _jobUrl(self, extraPathElements = []):
+        return '/'.join([self.host, 'job', self.name] + extraPathElements)

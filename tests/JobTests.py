@@ -14,7 +14,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/jobName").AndReturn(("blah", Http.OK))
+        http.getUrl("host/job/jobName").AndReturn(("blah", Http.OK))
         mocks.ReplayAll()
 
         job= Job(http, "host", "jobName")
@@ -26,7 +26,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/jobName").AndReturn(("blah", Http.NOT_FOUND))
+        http.getUrl("host/job/jobName").AndReturn(("blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "host", "jobName")
@@ -38,7 +38,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/jobName/config.xml").AndReturn(("some xml", Http.OK))
+        http.getUrl("host/job/jobName/config.xml").AndReturn(("some xml", Http.OK))
         mocks.ReplayAll()
 
         job= Job(http, "host", "jobName")
@@ -50,7 +50,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
+        http.getUrl("host/job/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "host", "jobName")
