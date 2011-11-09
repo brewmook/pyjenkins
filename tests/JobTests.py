@@ -14,10 +14,10 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/job/jobName").AndReturn(("blah", Http.OK))
+        http.getUrl("job/jobName").AndReturn(("blah", Http.OK))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.exists()
 
         self.assertEqual(True, result)
@@ -26,10 +26,10 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/job/jobName").AndReturn(("blah", Http.NOT_FOUND))
+        http.getUrl("job/jobName").AndReturn(("blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.exists()
 
         self.assertEqual(False, result)
@@ -38,10 +38,10 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/job/jobName/config.xml").AndReturn(("some xml", Http.OK))
+        http.getUrl("job/jobName/config.xml").AndReturn(("some xml", Http.OK))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.configurationXml()
 
         self.assertEqual("some xml", result)
@@ -50,10 +50,10 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("host/job/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
+        http.getUrl("job/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.configurationXml()
 
         self.assertEqual("", result)
@@ -62,13 +62,13 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/createItem", "", {'name':'jobName',
-                                          'mode':'copy',
-                                          'from':'otherJob'}) \
+        http.post("createItem", "", {'name':'jobName',
+                                     'mode':'copy',
+                                     'from':'otherJob'}) \
            .AndReturn(("blah blah", Http.OK))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.createCopy("otherJob")
 
         self.assertEqual(True, result)
@@ -77,13 +77,13 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/createItem", "", {'name':'jobName',
-                                          'mode':'copy',
-                                          'from':'otherJob'}) \
+        http.post("createItem", "", {'name':'jobName',
+                                     'mode':'copy',
+                                     'from':'otherJob'}) \
            .AndReturn(("blah blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.createCopy("otherJob")
 
         self.assertEqual(False, result)
@@ -92,11 +92,11 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/job/jobName/config.xml","xml data") \
+        http.post("job/jobName/config.xml","xml data") \
            .AndReturn(("blah blah", Http.OK))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.setConfigurationXml("xml data")
 
         self.assertEqual(True, result)
@@ -105,11 +105,11 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/job/jobName/config.xml","xml data") \
+        http.post("job/jobName/config.xml","xml data") \
            .AndReturn(("error text", Http.NOT_FOUND))
         mocks.ReplayAll()
 
-        job= Job(http, "host", "jobName")
+        job= Job(http, "jobName")
         result= job.setConfigurationXml("xml data")
 
         self.assertEqual(False, result)

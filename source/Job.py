@@ -24,9 +24,8 @@ class IJob:
 
 class Job(IJob):
 
-    def __init__(self, http, host, jobName):
+    def __init__(self, http, jobName):
         self.http = http
-        self.host = host
         self.name = jobName
 
     def exists(self):
@@ -59,13 +58,12 @@ class Job(IJob):
         arguments= {'name' : self.name,
                     'mode' : 'copy',
                     'from' : otherJobName}
-        url= '/'.join([self.host, 'createItem'])
         
-        (content, returnCode) = self.http.post(url, "", arguments)
+        (content, returnCode) = self.http.post('createItem', "", arguments)
         if returnCode != Http.OK:
             result= False
             
         return result
 
     def _jobUrl(self, extraPathElements = []):
-        return '/'.join([self.host, 'job', self.name] + extraPathElements)
+        return '/'.join(['job', self.name] + extraPathElements)
