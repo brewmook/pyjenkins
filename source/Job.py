@@ -10,6 +10,14 @@ class IJob:
         '''Return the configuration XML for this job as plain text.'''
         pass
 
+    def createCopy(self, otherJobName):
+        '''
+        Create a job on the host with self.name, copying settings from otherJobName.
+        Return True if the job was created, False otherwise.
+        '''
+        pass
+
+
 class Job(IJob):
 
     def __init__(self, http, host, jobName):
@@ -28,6 +36,20 @@ class Job(IJob):
         (result, returnCode) = self._getUrl(['config.xml'])
         if returnCode != Http.OK:
             result= ''
+        return result
+
+    def createCopy(self, otherJobName):
+        result= True
+        arguments= '&'.join(['name='+self.name,
+                             'mode=copy',
+                             'from='+otherJobName])
+        url= '/'.join([self.host,
+                       'createItem?'+arguments])
+        
+        (content, returnCode) = self.http.post(url, "")
+        if returnCode != Http.OK:
+            result= False
+            
         return result
 
     def _getUrl(self, extraPathElements = []):
