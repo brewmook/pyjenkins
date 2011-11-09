@@ -10,6 +10,10 @@ class IJob:
         '''Return the configuration XML for this job as plain text.'''
         pass
 
+    def setConfigurationXml(self, configurationXml):
+        '''Change the xml configuration. Return True on success, False otherwise'''
+        pass
+
     def createCopy(self, otherJobName):
         '''
         Create a job on the host with self.name, copying settings from otherJobName.
@@ -36,6 +40,16 @@ class Job(IJob):
         (result, returnCode) = self._getUrl(['config.xml'])
         if returnCode != Http.OK:
             result= ''
+        return result
+
+    def setConfigurationXml(self, configurationXml):
+        result= True
+        url= '/'.join([self.host, 'job', self.name, 'config.xml'])
+
+        (content, returnCode) = self.http.post(url, configurationXml)
+        if returnCode != Http.OK:
+            result= False
+            
         return result
 
     def createCopy(self, otherJobName):

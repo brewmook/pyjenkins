@@ -58,7 +58,7 @@ class JobTests(TestCase):
 
         self.assertEqual("", result)
 
-    def test_createCopy_HttpPostUrlReturnsOK_ReturnTrue(self):
+    def test_createCopy_HttpPostReturnsOK_ReturnTrue(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
@@ -71,7 +71,7 @@ class JobTests(TestCase):
 
         self.assertEqual(True, result)
 
-    def test_createCopy_HttpPostUrlReturnsNotOK_ReturnFalse(self):
+    def test_createCopy_HttpPostReturnsNotOK_ReturnFalse(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
@@ -81,5 +81,31 @@ class JobTests(TestCase):
 
         job= Job(http, "host", "jobName")
         result= job.createCopy("otherJob")
+
+        self.assertEqual(False, result)
+
+    def test_setConfigurationXml_HttpPostReturnsOK_ReturnTrue(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        http.post("host/job/jobName/config.xml","xml data") \
+           .AndReturn(("blah blah", Http.OK))
+        mocks.ReplayAll()
+
+        job= Job(http, "host", "jobName")
+        result= job.setConfigurationXml("xml data")
+
+        self.assertEqual(True, result)
+
+    def test_setConfigurationXml_HttpPostReturnsNotOK_ReturnFalse(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        http.post("host/job/jobName/config.xml","xml data") \
+           .AndReturn(("error text", Http.NOT_FOUND))
+        mocks.ReplayAll()
+
+        job= Job(http, "host", "jobName")
+        result= job.setConfigurationXml("xml data")
 
         self.assertEqual(False, result)
