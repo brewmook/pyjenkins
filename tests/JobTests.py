@@ -62,7 +62,9 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/createItem?name=jobName&mode=copy&from=otherJob","") \
+        http.post("host/createItem", "", {'name':'jobName',
+                                          'mode':'copy',
+                                          'from':'otherJob'}) \
            .AndReturn(("blah blah", Http.OK))
         mocks.ReplayAll()
 
@@ -75,7 +77,9 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("host/createItem?name=jobName&mode=copy&from=otherJob","") \
+        http.post("host/createItem", "", {'name':'jobName',
+                                          'mode':'copy',
+                                          'from':'otherJob'}) \
            .AndReturn(("blah blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 

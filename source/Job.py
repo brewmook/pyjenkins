@@ -56,13 +56,12 @@ class Job(IJob):
 
     def createCopy(self, otherJobName):
         result= True
-        arguments= '&'.join(['name='+self.name,
-                             'mode=copy',
-                             'from='+otherJobName])
-        url= '/'.join([self.host,
-                       'createItem?'+arguments])
+        arguments= {'name' : self.name,
+                    'mode' : 'copy',
+                    'from' : otherJobName}
+        url= '/'.join([self.host, 'createItem'])
         
-        (content, returnCode) = self.http.post(url, "")
+        (content, returnCode) = self.http.post(url, "", arguments)
         if returnCode != Http.OK:
             result= False
             

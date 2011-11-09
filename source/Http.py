@@ -8,7 +8,7 @@ class IHttp:
         '''Return tuple of (contents, returnCode) for the given url'''
         pass
 
-    def post(self, url, postData):
+    def post(self, url, postData, arguments={}):
         '''
         Sends a POST request with postData as the payload to url.
         Return tuple of (contents, returnCode).
