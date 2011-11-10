@@ -14,7 +14,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName").AndReturn(("blah", Http.OK))
+        http.getUrl("job/jobName/config.xml").AndReturn(("blah", Http.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -26,7 +26,7 @@ class JobTests(TestCase):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName").AndReturn(("blah", Http.NOT_FOUND))
+        http.getUrl("job/jobName/config.xml").AndReturn(("blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -46,7 +46,7 @@ class JobTests(TestCase):
 
         self.assertEqual("some xml", result)
 
-    def test_configurationXml_HttpGetUrlReturnsNotFound_ReturnEmptyString(self):
+    def test_configurationXml_HttpGetUrlReturnsNotFound_ReturnNone(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
@@ -56,7 +56,7 @@ class JobTests(TestCase):
         job= Job(http, "jobName")
         result= job.configurationXml()
 
-        self.assertEqual("", result)
+        self.assertEqual(None, result)
 
     def test_createCopy_HttpPostReturnsOK_ReturnTrue(self):
 
