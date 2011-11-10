@@ -1,15 +1,17 @@
 import urllib, urllib2
 import base64
 
+from UrlBuilder import UrlBuilder
+
 # Response constants
 OK = 200
 NOT_FOUND = 404
 
 class IHttp:
 
-    def request(self, url, arguments={}, postData=None):
+    def request(self, path, arguments={}, postData=None):
         '''
-        Request the given url.
+        Request the given path.
         
         Anything in arguments will be added as url query arguments.
         
@@ -33,11 +35,10 @@ class Http(IHttp):
 
     def request(self, path, arguments={}, postData=None):
 
-        url= "http://%s/%s" % (self.host, urllib.quote(path))
+        builder= UrlBuilder()
 
-        if arguments:
-            url= '?'.join(url, urllib.urlencode(arguments))
-        
+        url= builder.build('http', self.host, path, arguments)
+
         print url
 
         if postData:
