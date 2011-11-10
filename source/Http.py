@@ -1,3 +1,6 @@
+import urllib, urllib2
+import base64
+
 # Response constants
 OK = 200
 NOT_FOUND = 404
@@ -16,3 +19,45 @@ class IHttp:
         Return tuple of (contents, returnCode).
         '''
         pass
+
+class Http(IHttp):
+    '''
+    Helpful links:
+    http://www.voidspace.org.uk/python/articles/authentication.shtml
+    '''
+
+    def __init__(self, host, username, password):
+        self.host= host
+        self.username= username
+        self.password= password
+
+    def request(self, path, arguments={}, postData=None):
+
+        url= "http://%s/%s" % (self.host, urllib.quote(path))
+
+        if arguments:
+            url= '?'.join(url, urllib.urlencode(arguments))
+        
+        print url
+
+        if postData:
+            req = urllib2.Request(url, postData)
+        else:
+            req = urllib2.Request(url)
+
+        req.add_header('Authorization', self._authorization())
+        
+        try:
+            response = urllib2.urlopen(req)
+            result = (response.read(), OK)
+        except urllib2.HTTPError as error:
+            content= error.fp.read()
+            result = (content, error.code)
+
+        return result
+
+    def _authorization(self):
+
+        base64string = base64.encodestring('%s:%s' % (self.username,
+                                                      self.password))
+        return 'Basic ' + base64string.replace('\n','')
