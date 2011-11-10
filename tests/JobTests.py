@@ -10,11 +10,11 @@ from Http import IHttp
 
 class JobTests(TestCase):
 
-    def test_exists_HttpGetUrlReturnsOK_ReturnTrue(self):
+    def test_exists_HttpRequestReturnsOK_ReturnTrue(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName/config.xml").AndReturn(("blah", Http.OK))
+        http.request("job/jobName/config.xml").AndReturn(("blah", Http.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -22,11 +22,11 @@ class JobTests(TestCase):
 
         self.assertEqual(True, result)
 
-    def test_exists_HttpGetUrlReturnsNotFound_ReturnFalse(self):
+    def test_exists_HttpRequestReturnsNotFound_ReturnFalse(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName/config.xml").AndReturn(("blah", Http.NOT_FOUND))
+        http.request("job/jobName/config.xml").AndReturn(("blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -34,11 +34,11 @@ class JobTests(TestCase):
 
         self.assertEqual(False, result)
 
-    def test_configurationXml_HttpGetUrlReturnsOK_ReturnSomeXml(self):
+    def test_configurationXml_HttpRequestReturnsOK_ReturnSomeXml(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName/config.xml").AndReturn(("some xml", Http.OK))
+        http.request("job/jobName/config.xml").AndReturn(("some xml", Http.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -46,11 +46,11 @@ class JobTests(TestCase):
 
         self.assertEqual("some xml", result)
 
-    def test_configurationXml_HttpGetUrlReturnsNotFound_ReturnNone(self):
+    def test_configurationXml_HttpRequestReturnsNotFound_ReturnNone(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.getUrl("job/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
+        http.request("job/jobName/config.xml").AndReturn(("error text", Http.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -58,13 +58,15 @@ class JobTests(TestCase):
 
         self.assertEqual(None, result)
 
-    def test_createCopy_HttpPostReturnsOK_ReturnTrue(self):
+    def test_createCopy_HttpRequestReturnsOK_ReturnTrue(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("createItem", "", {'name':'jobName',
-                                     'mode':'copy',
-                                     'from':'otherJob'}) \
+        http.request("createItem",
+                     arguments= {'name':'jobName',
+                                 'mode':'copy',
+                                 'from':'otherJob'},
+                     postData= "") \
            .AndReturn(("blah blah", Http.OK))
         mocks.ReplayAll()
 
@@ -73,13 +75,15 @@ class JobTests(TestCase):
 
         self.assertEqual(True, result)
 
-    def test_createCopy_HttpPostReturnsNotOK_ReturnFalse(self):
+    def test_createCopy_HttpRequestReturnsNotOK_ReturnFalse(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("createItem", "", {'name':'jobName',
-                                     'mode':'copy',
-                                     'from':'otherJob'}) \
+        http.request("createItem",
+                     arguments= {'name':'jobName',
+                                 'mode':'copy',
+                                 'from':'otherJob'},
+                     postData= "") \
            .AndReturn(("blah blah", Http.NOT_FOUND))
         mocks.ReplayAll()
 
@@ -88,11 +92,11 @@ class JobTests(TestCase):
 
         self.assertEqual(False, result)
 
-    def test_setConfigurationXml_HttpPostReturnsOK_ReturnTrue(self):
+    def test_setConfigurationXml_HttpRequestReturnsOK_ReturnTrue(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("job/jobName/config.xml","xml data") \
+        http.request("job/jobName/config.xml", postData="xml data") \
            .AndReturn(("blah blah", Http.OK))
         mocks.ReplayAll()
 
@@ -101,11 +105,11 @@ class JobTests(TestCase):
 
         self.assertEqual(True, result)
 
-    def test_setConfigurationXml_HttpPostReturnsNotOK_ReturnFalse(self):
+    def test_setConfigurationXml_HttpRequestReturnsNotOK_ReturnFalse(self):
 
         mocks= mox.Mox();
         http= mocks.CreateMock(IHttp)
-        http.post("job/jobName/config.xml","xml data") \
+        http.request("job/jobName/config.xml", postData="xml data") \
            .AndReturn(("error text", Http.NOT_FOUND))
         mocks.ReplayAll()
 

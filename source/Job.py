@@ -31,14 +31,14 @@ class Job(IJob):
     def exists(self):
         result= True
         url= self._configUrl()
-        (text, returnCode) = self.http.getUrl(url)
+        (text, returnCode) = self.http.request(url)
         if returnCode != Http.OK:
             result= False
         return result
 
     def configurationXml(self):
         url= self._configUrl()
-        (result, returnCode) = self.http.getUrl(url)
+        (result, returnCode) = self.http.request(url)
         if returnCode != Http.OK:
             result= None
         return result
@@ -47,7 +47,8 @@ class Job(IJob):
         result= True
         url= self._configUrl()
 
-        (content, returnCode) = self.http.post(url, configurationXml)
+        (content, returnCode) = self.http.request(url,
+                                                  postData=configurationXml)
         if returnCode != Http.OK:
             result= False
             
@@ -59,7 +60,9 @@ class Job(IJob):
                     'mode' : 'copy',
                     'from' : otherJobName}
         
-        (content, returnCode) = self.http.post('createItem', "", arguments)
+        (content, returnCode) = self.http.request('createItem',
+                                                  postData="",
+                                                  arguments=arguments)
         if returnCode != Http.OK:
             result= False
             
