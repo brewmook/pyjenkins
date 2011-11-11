@@ -1,7 +1,5 @@
-import urllib, urllib2
-import base64
-
-from UrlBuilder import UrlBuilder
+from UrlBuilder import UrlBuilderFactory
+from Request import Urllib2RequestFactory
 
 # Response constants
 OK = 200
@@ -28,37 +26,21 @@ class Http(IHttp):
     http://www.voidspace.org.uk/python/articles/authentication.shtml
     '''
 
-    def __init__(self, host, username, password):
+    def __init__(self, host, username, password,
+                 urlBuilderFactory = UrlBuilderFactory(),
+                 requestFactory = Urllib2RequestFactory()):
         self.host= host
         self.username= username
         self.password= password
+        self.requestFactory= requestFactory
+        self.urlBuilderFactory= urlBuilderFactory
 
     def request(self, path, arguments={}, postData=None):
 
-        builder= UrlBuilder()
+        builder= self.urlBuilderFactory.create()
+        url= builder.build(self.host, path, arguments)
 
-        url= builder.build('http', self.host, path, arguments)
+        req= self.requestFactory.create(url)
+        req.setBasicAuthorisation(self.username, self.password)
 
-        print url
-
-        if postData:
-            req = urllib2.Request(url, postData)
-        else:
-            req = urllib2.Request(url)
-
-        req.add_header('Authorization', self._authorization())
-        
-        try:
-            response = urllib2.urlopen(req)
-            result = (response.read(), OK)
-        except urllib2.HTTPError as error:
-            content= error.fp.read()
-            result = (content, error.code)
-
-        return result
-
-    def _authorization(self):
-
-        base64string = base64.encodestring('%s:%s' % (self.username,
-                                                      self.password))
-        return 'Basic ' + base64string.replace('\n','')
+        return req.open(postData)

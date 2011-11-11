@@ -2,7 +2,7 @@ import urllib
 
 class IUrlBuilderFactory:
 
-    def create():
+    def create(self):
         pass
 
 class IUrlBuilder:
@@ -29,5 +29,5 @@ class UrlBuilder:
 
 class UrlBuilderFactory(IUrlBuilderFactory):
 
-    def create():
+    def create(self):
         return UrlBuilder()
