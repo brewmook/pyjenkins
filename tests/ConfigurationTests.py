@@ -49,3 +49,17 @@ class ConfigurationTests(TestCase):
         result= configuration.setSubversionRepository('http://host/path/to/repo')
 
         self.assertEqual(False, result)
+
+    def test_subversionRepository_CorrectXPathUsed_ReturnResultFromXml(self):
+
+        mocks= mox.Mox()
+        xml= mocks.CreateMock(IXml)
+
+        xml.getFirstNodeText('//hudson.scm.SubversionSCM_-ModuleLocation/remote') \
+            .AndReturn('http://host/path/to/repository')
+        mocks.ReplayAll()
+
+        configuration= Configuration(xml)
+        result= configuration.subversionRepository()
+
+        self.assertEqual('http://host/path/to/repository', result)

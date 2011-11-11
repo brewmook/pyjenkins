@@ -58,3 +58,19 @@ class XmlTests(TestCase):
         result= xml.setFirstNodeText('//other', 'whatever')
 
         self.assertEqual(True, result)
+
+    def test_getFirstNodeText_XPathNodeExists_ReturnNodeContents(self):
+
+        xml= Xml('<stuff><things>words words</things></stuff>')
+
+        result= xml.getFirstNodeText('//things')
+
+        self.assertEqual('words words', result)
+
+    def test_getFirstNodeText_XPathNodeDoesNotExist_ReturnNone(self):
+
+        xml= Xml('<stuff><things>words words</things></stuff>')
+
+        result= xml.getFirstNodeText('//friday')
+
+        self.assertEqual(None, result)
