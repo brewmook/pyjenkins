@@ -1,3 +1,5 @@
+from xml.etree import ElementTree
+
 class IXmlFactory:
 
     def create(self, rawXmlString):
@@ -29,7 +31,18 @@ class Xml:
 
     def setFirstNodeText(self, xpath, text):
 
-        pass
+        result= False
+
+        root = ElementTree.fromstring(self.xml)
+        tree = ElementTree.ElementTree(root)
+        element = tree.find(xpath)
+
+        if element != None:
+            element.text = text
+            self.xml = ElementTree.tostring(root)
+            result= True
+
+        return result
 
 class XmlFactory:
 
