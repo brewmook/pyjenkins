@@ -7,11 +7,11 @@ class XmlTests(TestCase):
 
     def test_toString_NoChangesMade_ReturnOriginalXml(self):
 
-        xml= Xml('raw xml')
+        xml= Xml('<some>xml</some>')
         
         result= xml.toString()
 
-        self.assertEqual('raw xml', result)
+        self.assertEqual('<some>xml</some>', result)
 
     def test_toString_setFirstNodeTextReturnsTrue_ReturnModifiedXml(self):
 

@@ -30,19 +30,17 @@ class Xml:
 
     def __init__(self, rawXmlString):
 
-        self.xml= rawXmlString
+        root = ElementTree.fromstring(rawXmlString)
+        self.tree = ElementTree.ElementTree(root)
 
     def toString(self):
 
-        return self.xml
+        return ElementTree.tostring(self.tree.getroot())
 
     def getFirstNodeText(self, xpath):
 
         result= None
-
-        root = ElementTree.fromstring(self.xml)
-        tree = ElementTree.ElementTree(root)
-        element = tree.find(xpath)
+        element = self.tree.find(xpath)
 
         if element != None:
             result= element.text
@@ -52,23 +50,13 @@ class Xml:
     def setFirstNodeText(self, xpath, text):
 
         result= False
-
-        root = ElementTree.fromstring(self.xml)
-        tree = ElementTree.ElementTree(root)
-        element = tree.find(xpath)
+        element = self.tree.find(xpath)
 
         if element != None:
             element.text = text
-            self.xml = ElementTree.tostring(root)
             result= True
 
         return result
-
-    def _findElement(self, xpath):
-
-        root = ElementTree.fromstring(self.xml)
-        tree = ElementTree.ElementTree(root)
-        return tree.find(xpath)
 
 class XmlFactory:
 
