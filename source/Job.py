@@ -1,4 +1,5 @@
 import Http
+import Xml
 
 class IJob:
 
@@ -24,31 +25,37 @@ class IJob:
 
 class Job(IJob):
 
-    def __init__(self, http, jobName):
+    def __init__(self, http, jobName,
+                 xmlFactory = Xml.XmlFactory()):
         self.http = http
         self.name = jobName
+        self.xmlFactory = xmlFactory
 
     def exists(self):
         result= True
         url= self._configUrl()
         (text, returnCode) = self.http.request(url)
+
         if returnCode != Http.OK:
             result= False
+
         return result
 
     def configurationXml(self):
+        result= None
         url= self._configUrl()
-        (result, returnCode) = self.http.request(url)
-        if returnCode != Http.OK:
-            result= None
+        (contents, returnCode) = self.http.request(url)
+
+        if returnCode == Http.OK:
+            result= self.xmlFactory.create(contents)
+
         return result
 
-    def setConfigurationXml(self, configurationXml):
+    def setConfigurationXml(self, xml):
         result= True
         url= self._configUrl()
+        (content, returnCode) = self.http.request(url, postData=xml.toString())
 
-        (content, returnCode) = self.http.request(url,
-                                                  postData=configurationXml)
         if returnCode != Http.OK:
             result= False
             
@@ -59,7 +66,6 @@ class Job(IJob):
         arguments= {'name' : self.name,
                     'mode' : 'copy',
                     'from' : otherJobName}
-        
         (content, returnCode) = self.http.request('createItem',
                                                   postData="",
                                                   arguments=arguments)
