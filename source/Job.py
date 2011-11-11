@@ -3,6 +3,9 @@ import Configuration
 
 class IJob:
 
+    def name(self):
+        '''Return the name of the job.'''
+
     def exists(self):
         '''Return True if the job exists, False otherwise'''
         pass
@@ -27,8 +30,11 @@ class Job(IJob):
 
     def __init__(self, http, jobName):
         self.http = http
-        self.name = jobName
+        self._name = jobName
         self.configurationFactory = Configuration.ConfigurationFactory()
+
+    def name(self):
+        return self._name
 
     def exists(self):
         result= True
@@ -62,7 +68,7 @@ class Job(IJob):
 
     def createCopy(self, otherJobName):
         result= True
-        arguments= {'name' : self.name,
+        arguments= {'name' : self._name,
                     'mode' : 'copy',
                     'from' : otherJobName}
         (content, returnCode) = self.http.request('createItem',
@@ -74,4 +80,17 @@ class Job(IJob):
         return result
 
     def _configUrl(self):
-        return '/'.join(['job', self.name, 'config.xml'])
+        return '/'.join(['job', self._name, 'config.xml'])
+
+class IJobFactory:
+    
+    def create(self, http):
+        pass
+
+class JobFactory(IJobFactory):
+
+    def __init__(self, http):
+        self.http= http
+
+    def create(self, name):
+        return Job(self.http, name)

@@ -12,6 +12,11 @@ from Xml import IXml
 
 class JobTests(TestCase):
 
+    def test_name_ReturnNamePassedOnConstruction(self):
+
+        job= Job(None, 'a name')
+        self.assertEqual('a name', job.name())
+
     def test_exists_HttpRequestReturnsOK_ReturnTrue(self):
 
         mocks= mox.Mox();
