@@ -1,5 +1,5 @@
 import Http
-import Xml
+import Configuration
 
 class IJob:
 
@@ -7,12 +7,12 @@ class IJob:
         '''Return True if the job exists, False otherwise'''
         pass
 
-    def configurationXml(self):
-        '''Return the configuration XML for this job as plain text.'''
+    def configuration(self):
+        '''Return an IConfiguration instance for this job.'''
         pass
 
-    def setConfigurationXml(self, configurationXml):
-        '''Change the xml configuration. Return True on success, False otherwise'''
+    def setConfiguration(self, aConfiguration):
+        '''Change the remote configuration. Return True on success, False otherwise'''
         pass
 
     def createCopy(self, otherJobName):
@@ -25,11 +25,10 @@ class IJob:
 
 class Job(IJob):
 
-    def __init__(self, http, jobName,
-                 xmlFactory = Xml.XmlFactory()):
+    def __init__(self, http, jobName):
         self.http = http
         self.name = jobName
-        self.xmlFactory = xmlFactory
+        self.configurationFactory = Configuration.ConfigurationFactory()
 
     def exists(self):
         result= True
@@ -41,20 +40,20 @@ class Job(IJob):
 
         return result
 
-    def configurationXml(self):
+    def configuration(self):
         result= None
         url= self._configUrl()
         (contents, returnCode) = self.http.request(url)
 
         if returnCode == Http.OK:
-            result= self.xmlFactory.create(contents)
+            result= self.configurationFactory.create(contents)
 
         return result
 
-    def setConfigurationXml(self, xml):
+    def setConfiguration(self, aConfiguration):
         result= True
         url= self._configUrl()
-        (content, returnCode) = self.http.request(url, postData=xml.toString())
+        (content, returnCode) = self.http.request(url, postData=aConfiguration.rawXml())
 
         if returnCode != Http.OK:
             result= False
