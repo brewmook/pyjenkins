@@ -3,8 +3,10 @@ from unittest import TestCase
 
 from Jenkins import Jenkins
 
+import Http
 from Http import IHttp
 from Job import IJob, IJobFactory
+from Json import IJson
 
 class JenkinsTests(TestCase):
 
@@ -94,3 +96,75 @@ class JenkinsTests(TestCase):
         result= jenkins.copyJob('source', 'target')
 
         self.assertEqual(None, result)
+
+    def test_listJobs_HttpRequestNotOk_ReturnNone(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJson)
+
+        http.request('api/json', {'depth': 0}).AndReturn(('whatever', Http.NOT_FOUND))
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+        
+        result= jenkins.listJobs()
+
+        self.assertEqual(None, result)
+
+    def test_listJobs_JsonResultHasNoJobsElement_ReturnNone(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJson)
+
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        json.parse('json response').AndReturn({'pies':3})
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+        
+        result= jenkins.listJobs()
+
+        self.assertEqual(None, result)
+
+    def test_listJobs_JsonResultContainsEmptyJobsList_ReturnEmptyList(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJson)
+
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        json.parse('json response').AndReturn({'jobs':[]})
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+        
+        result= jenkins.listJobs()
+
+        self.assertEqual([], result)
+
+    def test_listJobs_JobsListHasSomeJobs_ReturnJobNamesInList(self):
+
+        mocks= mox.Mox();
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJson)
+
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        json.parse('json response').AndReturn({'jobs':[{'name':'winston'},
+                                                       {'name':'geoff'}
+                                                       ]})
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+        
+        result= jenkins.listJobs()
+
+        self.assertEqual(['winston', 'geoff'], result)
