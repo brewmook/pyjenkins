@@ -2,7 +2,24 @@ import Http
 import Job
 import Json
 
-class Jenkins:
+class IJenkins:
+
+    def copyJob(self, sourceJobName, targetJobName):
+        '''
+        Returns target job on success, or None on failure.
+        '''
+    
+    def listJobs(self):
+        '''
+        Returns a list of job names.
+        '''
+
+    def getJob(self, jobName):
+        '''
+        Return an IJob if it exists, or None otherwise.
+        '''
+
+class Jenkins(IJenkins):
 
     def __init__(self, http):
         self.http= http
@@ -10,9 +27,6 @@ class Jenkins:
         self.json = Json.Json()
 
     def copyJob(self, sourceJobName, targetJobName):
-        '''
-        Returns target job on success, or None on failure.
-        '''
         sourceJob= self.jobFactory.create(sourceJobName)
         result= None
 
@@ -27,10 +41,6 @@ class Jenkins:
         return result
     
     def listJobs(self):
-        '''
-        Returns a list of job names.
-        '''
-
         result= None
         (json, status) = self.http.request('api/json', {'depth':0})
 
