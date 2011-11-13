@@ -168,3 +168,41 @@ class JenkinsTests(TestCase):
         result= jenkins.listJobs()
 
         self.assertEqual(['winston', 'geoff'], result)
+
+    def test_getJob_JobExists_ReturnJob(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        jobFactory= mocks.CreateMock(IJobFactory)
+        job= mocks.CreateMock(IJob)
+
+        jobFactory.create('source').AndReturn(job)
+        job.exists().AndReturn(True)
+
+        mocks.ReplayAll()
+
+        jenkins= Jenkins(http)
+        jenkins.jobFactory= jobFactory
+
+        result= jenkins.getJob('source')
+        
+        self.assertEqual(job, result)
+
+    def test_getJob_JobExists_ReturnJob(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        jobFactory= mocks.CreateMock(IJobFactory)
+        job= mocks.CreateMock(IJob)
+
+        jobFactory.create('source').AndReturn(job)
+        job.exists().AndReturn(False)
+
+        mocks.ReplayAll()
+
+        jenkins= Jenkins(http)
+        jenkins.jobFactory= jobFactory
+
+        result= jenkins.getJob('source')
+        
+        self.assertEqual(None, result)

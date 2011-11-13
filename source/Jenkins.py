@@ -50,3 +50,10 @@ class Jenkins(IJenkins):
                 result= [job['name'] for job in data['jobs']]
 
         return result
+
+    def getJob(self, jobName):
+        
+        job= self.jobFactory.create(jobName)
+        if not job.exists():
+            job= None
+        return job
