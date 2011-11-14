@@ -22,18 +22,25 @@ class IConfiguration:
     def setSubversionRepository(self, url):
         '''
         Replace the current subversion repository.
-        Return True on success, False otherwise.
+        Return True on success, False if the setting is not already in the xml.
         '''
 
     def setChildProjects(self, jobName):
         '''
         Replace the name of the job(s) to build after this job.
-        Return True on success, False otherwise.
+        Return True on success, False if the setting is not already in the xml.
+        '''
+
+    def setCopyArtifactsJobName(self, jobName):
+        '''
+        Replace the name of the job(s) to copy artifacts from.
+        Return True on success, False if the setting is not already in the xml.
         '''
 
 # Constants
 SUBVERSION_REPOSITORY_XPATH = '//hudson.scm.SubversionSCM_-ModuleLocation/remote'
 CHILD_PROJECTS_XPATH = '/project/publishers/hudson.tasks.BuildTrigger/childProjects'
+COPY_ARTIFACTS_JOB_NAME_XPATH = '/project/builders/hudson.plugins.copyartifact.CopyArtifact/projectName'
 
 class Configuration(IConfiguration):
 
@@ -51,6 +58,9 @@ class Configuration(IConfiguration):
 
     def setChildProjects(self, jobName):
         return self.xml.setFirstNodeText(CHILD_PROJECTS_XPATH, jobName)
+
+    def setCopyArtifactsJobName(self, jobName):
+        return self.xml.setFirstNodeText(COPY_ARTIFACTS_JOB_NAME_XPATH, jobName)
 
 class ConfigurationFactory(IConfigurationFactory):
 

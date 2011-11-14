@@ -20,37 +20,22 @@ class ConfigurationTests(TestCase):
 
         self.assertEqual('the raw xml', result)
 
-    def test_setSubversionRepository_SubversionRepositoryExists_ReturnTrue(self):
+    def test_setSubversionRepository_XmlExpectsAppropriateKey_ReturnWhateverXmlReturns(self):
 
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
         xml.setFirstNodeText('//hudson.scm.SubversionSCM_-ModuleLocation/remote',
                              'http://host/path/to/repo') \
-            .AndReturn(True)
+            .AndReturn('mangos')
         mocks.ReplayAll()
 
         configuration= Configuration(xml)
         result= configuration.setSubversionRepository('http://host/path/to/repo')
 
-        self.assertEqual(True, result)
+        self.assertEqual('mangos', result)
 
-    def test_setSubversionRepository_SubversionRepositoryExists_ReturnFalse(self):
-
-        mocks= mox.Mox()
-        xml= mocks.CreateMock(IXml)
-
-        xml.setFirstNodeText('//hudson.scm.SubversionSCM_-ModuleLocation/remote',
-                             'http://host/path/to/repo') \
-            .AndReturn(False)
-        mocks.ReplayAll()
-
-        configuration= Configuration(xml)
-        result= configuration.setSubversionRepository('http://host/path/to/repo')
-
-        self.assertEqual(False, result)
-
-    def test_subversionRepository_CorrectXPathUsed_ReturnResultFromXml(self):
+    def test_subversionRepository_XmlExpectsAppropriateKey_ReturnWhateverXmlReturns(self):
 
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
@@ -64,32 +49,32 @@ class ConfigurationTests(TestCase):
 
         self.assertEqual('http://host/path/to/repository', result)
 
-    def test_setChildProjects_AlreadyExists_ReturnTrue(self):
+    def test_setChildProjects_XmlExpectsAppropriateKey_ReturnWhateverXmlReturns(self):
 
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
         xml.setFirstNodeText('/project/publishers/hudson.tasks.BuildTrigger/childProjects',
                              'tests job') \
-            .AndReturn(True)
+            .AndReturn('kiwis')
         mocks.ReplayAll()
 
         configuration= Configuration(xml)
         result= configuration.setChildProjects('tests job')
 
-        self.assertEqual(True, result)
+        self.assertEqual('kiwis', result)
 
-    def test_setChildProjects_XPathKeyNotFound_ReturnFalse(self):
+    def test_setCopyArtifactsJobName_XmlExpectsAppropriateKey_ReturnWhateverXmlReturns(self):
 
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('/project/publishers/hudson.tasks.BuildTrigger/childProjects',
-                             'tests job') \
-            .AndReturn(False)
+        xml.setFirstNodeText('/project/builders/hudson.plugins.copyartifact.CopyArtifact/projectName',
+                             'build job') \
+            .AndReturn('bananas')
         mocks.ReplayAll()
 
         configuration= Configuration(xml)
-        result= configuration.setChildProjects('tests job')
+        result= configuration.setCopyArtifactsJobName('build job')
 
-        self.assertEqual(False, result)
+        self.assertEqual('bananas', result)
