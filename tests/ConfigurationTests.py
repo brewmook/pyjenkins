@@ -54,7 +54,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('/project/publishers/hudson.tasks.BuildTrigger/childProjects',
+        xml.setFirstNodeText('//hudson.tasks.BuildTrigger/childProjects',
                              'tests job') \
             .AndReturn('kiwis')
         mocks.ReplayAll()
@@ -69,7 +69,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('/project/builders/hudson.plugins.copyartifact.CopyArtifact/projectName',
+        xml.setFirstNodeText('//hudson.plugins.copyartifact.CopyArtifact/projectName',
                              'build job') \
             .AndReturn('bananas')
         mocks.ReplayAll()

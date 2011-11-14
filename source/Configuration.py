@@ -39,8 +39,8 @@ class IConfiguration:
 
 # Constants
 SUBVERSION_REPOSITORY_XPATH = '//hudson.scm.SubversionSCM_-ModuleLocation/remote'
-CHILD_PROJECTS_XPATH = '/project/publishers/hudson.tasks.BuildTrigger/childProjects'
-COPY_ARTIFACTS_JOB_NAME_XPATH = '/project/builders/hudson.plugins.copyartifact.CopyArtifact/projectName'
+CHILD_PROJECTS_XPATH = '//hudson.tasks.BuildTrigger/childProjects'
+COPY_ARTIFACTS_JOB_NAME_XPATH = '//hudson.plugins.copyartifact.CopyArtifact/projectName'
 
 class Configuration(IConfiguration):
 
