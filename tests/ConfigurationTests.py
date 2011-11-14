@@ -63,3 +63,33 @@ class ConfigurationTests(TestCase):
         result= configuration.subversionRepository()
 
         self.assertEqual('http://host/path/to/repository', result)
+
+    def test_setChildProjects_AlreadyExists_ReturnTrue(self):
+
+        mocks= mox.Mox()
+        xml= mocks.CreateMock(IXml)
+
+        xml.setFirstNodeText('/project/publishers/hudson.tasks.BuildTrigger/childProjects',
+                             'tests job') \
+            .AndReturn(True)
+        mocks.ReplayAll()
+
+        configuration= Configuration(xml)
+        result= configuration.setChildProjects('tests job')
+
+        self.assertEqual(True, result)
+
+    def test_setChildProjects_XPathKeyNotFound_ReturnFalse(self):
+
+        mocks= mox.Mox()
+        xml= mocks.CreateMock(IXml)
+
+        xml.setFirstNodeText('/project/publishers/hudson.tasks.BuildTrigger/childProjects',
+                             'tests job') \
+            .AndReturn(False)
+        mocks.ReplayAll()
+
+        configuration= Configuration(xml)
+        result= configuration.setChildProjects('tests job')
+
+        self.assertEqual(False, result)

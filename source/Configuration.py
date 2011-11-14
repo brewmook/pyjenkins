@@ -25,8 +25,15 @@ class IConfiguration:
         Return True on success, False otherwise.
         '''
 
+    def setChildProjects(self, jobName):
+        '''
+        Replace the name of the job(s) to build after this job.
+        Return True on success, False otherwise.
+        '''
+
 # Constants
 SUBVERSION_REPOSITORY_XPATH = '//hudson.scm.SubversionSCM_-ModuleLocation/remote'
+CHILD_PROJECTS_XPATH = '/project/publishers/hudson.tasks.BuildTrigger/childProjects'
 
 class Configuration(IConfiguration):
 
@@ -41,6 +48,9 @@ class Configuration(IConfiguration):
 
     def setSubversionRepository(self, url):
         return self.xml.setFirstNodeText(SUBVERSION_REPOSITORY_XPATH, url)
+
+    def setChildProjects(self, jobName):
+        return self.xml.setFirstNodeText(CHILD_PROJECTS_XPATH, jobName)
 
 class ConfigurationFactory(IConfigurationFactory):
 
