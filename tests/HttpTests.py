@@ -24,8 +24,8 @@ class HttpTests(TestCase):
         urlBuilder.build('host', 'path', arguments).AndReturn('full url')
 
         requestFactory.create('full url').AndReturn(request)
-        #request.setBasicAuthorisation('username', 'password').AndReturn(requestAuthorised)
-        request.open(postData).AndReturn(expectedResult)
+        request.setBasicAuthorisation(mox.IgnoreArg(), mox.IgnoreArg()).InAnyOrder()
+        request.open(postData).InAnyOrder().AndReturn(expectedResult)
 
         mocks.ReplayAll()
 
@@ -34,7 +34,7 @@ class HttpTests(TestCase):
 
         self.assertEqual(expectedResult, result)
 
-    def test_request_WellBehavedFactories_ReturnRequestOpenResult(self):
+    def test_request_WellBehavedFactories_EnsureAuthenticationIsSet(self):
 
         expectedResult = ("text", 123)
         arguments = { 'something' : 'whatever' }
@@ -56,6 +56,6 @@ class HttpTests(TestCase):
         mocks.ReplayAll()
 
         http= Http('host', 'username', 'password', urlBuilderFactory, requestFactory)
-        result= http.request('path', arguments, postData)
+        http.request('path', arguments, postData)
 
-        mocks.VerifyAll()
+        mox.Verify(request)

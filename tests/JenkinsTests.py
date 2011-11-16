@@ -188,7 +188,7 @@ class JenkinsTests(TestCase):
         
         self.assertEqual(job, result)
 
-    def test_getJob_JobExists_ReturnJob(self):
+    def test_getJob_JobDoesNotExist_ReturnNone(self):
 
         mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
