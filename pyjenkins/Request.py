@@ -1,23 +1,29 @@
-import urllib, urllib2
+import urllib2
 import base64
 
 class IRequestFactory(object):
 
     def create(self, url):
-        pass
+        """
+        @type url: str
+        @rtype: pyjenkins.Request.IRequest
+        """
 
 class IRequest(object):
 
     def setBasicAuthorisation(self, username, password):
-        pass
+        """
+        @type username: str
+        @type password: str
+        """
 
     def open(self, postData=None):
-        '''
-        Return tuple of (page content, http status code)
-
-        Default is to use GET, but if postData is supplied, use POST.
-        '''
-        pass
+        """
+        @param postData: data to be sent via POST method. Default is to send via GET.
+        @type  postData: str
+        @return: Tuple representing content and http status code
+        @rtype: (str, int)
+        """
 
 # ----------------------------------------------------------------------
 # urllib2 implementation

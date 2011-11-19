@@ -5,19 +5,22 @@ from pyjenkins.Json import Json
 class IJenkins(object):
     
     def copyJob(self, sourceJobName, targetJobName):
-        '''
-        Returns target job on success, or None on failure.
-        '''
+        """
+        @return: target job on success, or None on failure.
+        @rtype:  pyjenkins.Job.IJob
+        """
 
     def listJobs(self):
-        '''
-        Returns a list of job names.
-        '''
+        """
+        @return: list of job names
+        @rtype: [str]
+        """
 
     def getJob(self, jobName):
-        '''
-        Return an IJob if it exists, or None otherwise.
-        '''
+        """
+        @return: job instance if it exists, or None otherwise.
+        @rtype:  pyjenkins.Job.IJob
+        """
 
 class Jenkins(IJenkins):
 

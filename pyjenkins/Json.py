@@ -1,9 +1,11 @@
 class IJson(object):
 
     def parse(self, jsonString):
-        '''
-        Convert the json string into a dictionary
-        '''
+        """
+        Convert the json string into a traversable dictionary.
+        @type jsonString: str
+        @rtype: dict
+        """
 
 import json
 

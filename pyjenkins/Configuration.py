@@ -3,40 +3,48 @@ from pyjenkins.Xml import Xml
 class IConfigurationFactory(object):
 
     def create(self, rawXml):
-        '''
-        Create a IConfiguration instance from the raw xml provided.
-        '''
-
+        """
+        @type rawXml: str
+        @rtype: pyjenkins.IConfiguration.IConfiguration
+        """
 
 class IConfiguration(object):
 
     def rawXml(self):
-        '''
-        Return Jenkins-format configuration xml string.
-        '''
+        """
+        @return: Jenkins-format configuration xml string.
+        @rtype: str
+        """
 
     def subversionRepository(self):
-        '''
-        Return the current Subversion repository url or None if it\'s not there.
-        '''
+        """
+        @return: The current Subversion repository url or None if it\'s not there.
+        @rtype: str
+        """
 
     def setSubversionRepository(self, url):
-        '''
-        Replace the current subversion repository.
-        Return True on success, False if the setting is not already in the xml.
-        '''
+        """
+        Replace the current subversion repository url.
+        @type url: str
+        @return: True on success, False if the setting is not already in the xml.
+        @rtype: bool
+        """
 
     def setChildProjects(self, jobName):
-        '''
+        """
         Replace the name of the job(s) to build after this job.
-        Return True on success, False if the setting is not already in the xml.
-        '''
+        @type jobName: str
+        @return True on success, False if the setting is not already in the xml.
+        @rtype: bool
+        """
 
     def setCopyArtifactsJobName(self, jobName):
-        '''
+        """
         Replace the name of the job(s) to copy artifacts from.
-        Return True on success, False if the setting is not already in the xml.
-        '''
+        @type jobName: str
+        @return True on success, False if the setting is not already in the xml.
+        @rtype: bool
+        """
 
 # Constants
 SUBVERSION_REPOSITORY_XPATH = '//hudson.scm.SubversionSCM_-ModuleLocation/remote'

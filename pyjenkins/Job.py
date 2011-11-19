@@ -4,27 +4,37 @@ from pyjenkins.Configuration import ConfigurationFactory
 class IJob(object):
 
     def name(self):
-        '''Return the name of the job.'''
+        """
+        @rtype: str
+        """
 
     def exists(self):
-        '''Return True if the job exists, False otherwise'''
-        pass
+        """
+        @return: True if the job exists, False otherwise.
+        @rtype: bool
+        """
 
     def configuration(self):
-        '''Return an IConfiguration instance for this job.'''
-        pass
+        """
+        Fetch the configuration from the server. No cacheing.
+        @rtype: pyjenkins.Configuration.IConfiguration
+        """
 
-    def setConfiguration(self, aConfiguration):
-        '''Change the remote configuration. Return True on success, False otherwise'''
-        pass
+    def setConfiguration(self, configuration):
+        """
+        Send the configuration to the remote server. No cacheing.
+        @type configuration: pyjenkins.Configuration.IConfiguration
+        @return: True if the server accepted the configuration, False otherwise.
+        @rtype: bool
+        """
 
     def createCopy(self, otherJobName):
-        '''
+        """
         Create a job on the host with self.name, copying settings from otherJobName.
-        Return True if the job was created, False otherwise.
-        '''
-        pass
-
+        @type otherJobName: str
+        @return: True if the job was created, False otherwise.
+        @rtype: bool
+        """
 
 class Job(IJob):
 
