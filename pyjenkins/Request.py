@@ -1,6 +1,5 @@
 import urllib, urllib2
 import base64
-import Http
 
 class IRequestFactory:
 
@@ -23,6 +22,8 @@ class IRequest:
 # ----------------------------------------------------------------------
 # urllib2 implementation
 # ----------------------------------------------------------------------
+
+#from pyjenkins import Http
 
 class Urllib2Request(IRequest):
 

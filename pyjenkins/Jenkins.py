@@ -1,6 +1,6 @@
-import Http
-import Job
-import Json
+from pyjenkins import Http
+from pyjenkins.Job import JobFactory
+from pyjenkins.Json import Json
 
 class IJenkins:
 
@@ -23,8 +23,8 @@ class Jenkins(IJenkins):
 
     def __init__(self, http):
         self.http= http
-        self.jobFactory = Job.JobFactory(http)
-        self.json = Json.Json()
+        self.jobFactory = JobFactory(http)
+        self.json = Json()
 
     def copyJob(self, sourceJobName, targetJobName):
         sourceJob= self.jobFactory.create(sourceJobName)

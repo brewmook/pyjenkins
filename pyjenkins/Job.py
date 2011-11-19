@@ -1,5 +1,5 @@
-import Http
-import Configuration
+from pyjenkins import Http
+from pyjenkins.Configuration import ConfigurationFactory
 
 class IJob:
 
@@ -31,7 +31,7 @@ class Job(IJob):
     def __init__(self, http, jobName):
         self.http = http
         self._name = jobName
-        self.configurationFactory = Configuration.ConfigurationFactory()
+        self.configurationFactory = ConfigurationFactory()
 
     def name(self):
         return self._name

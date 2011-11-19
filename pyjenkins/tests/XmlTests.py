@@ -1,7 +1,6 @@
-import mox
 from unittest import TestCase
 
-from Xml import Xml
+from pyjenkins.Xml import Xml
 
 class XmlTests(TestCase):
 

@@ -1,5 +1,5 @@
-from UrlBuilder import UrlBuilderFactory
-from Request import Urllib2RequestFactory
+from pyjenkins.UrlBuilder import UrlBuilderFactory
+from pyjenkins.Request import Urllib2RequestFactory
 
 # Response constants
 OK = 200

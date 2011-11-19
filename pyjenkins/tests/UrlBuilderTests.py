@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from UrlBuilder import UrlBuilder
+from pyjenkins.UrlBuilder import UrlBuilder
 
 class UrlBuilderTests(TestCase):
 

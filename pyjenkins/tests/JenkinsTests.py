@@ -1,12 +1,11 @@
 import mox
 from unittest import TestCase
 
-from Jenkins import Jenkins
-
-import Http
-from Http import IHttp
-from Job import IJob, IJobFactory
-from Json import IJson
+from pyjenkins import Http
+from pyjenkins.Jenkins import Jenkins
+from pyjenkins.Http import IHttp
+from pyjenkins.Job import IJob, IJobFactory
+from pyjenkins.Json import IJson
 
 class JenkinsTests(TestCase):
 

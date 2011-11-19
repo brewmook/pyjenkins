@@ -1,14 +1,10 @@
-import sys
-import os
 import mox
 from unittest import TestCase
 
-import Http
-
-from Job import Job
-from Http import IHttp
-from Configuration import IConfiguration, IConfigurationFactory
-from Xml import IXml
+from pyjenkins import Http
+from pyjenkins.Job import Job
+from pyjenkins.Http import IHttp
+from pyjenkins.Configuration import IConfiguration, IConfigurationFactory
 
 class JobTests(TestCase):
 
