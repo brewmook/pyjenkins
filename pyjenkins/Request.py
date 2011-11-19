@@ -1,12 +1,12 @@
 import urllib, urllib2
 import base64
 
-class IRequestFactory:
+class IRequestFactory(object):
 
     def create(self, url):
         pass
 
-class IRequest:
+class IRequest(object):
 
     def setBasicAuthorisation(self, username, password):
         pass

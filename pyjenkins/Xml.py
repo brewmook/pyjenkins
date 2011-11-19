@@ -1,11 +1,11 @@
 from xml.etree import ElementTree
 
-class IXmlFactory:
+class IXmlFactory(object):
 
     def create(self, rawXmlString):
         pass
 
-class IXml:
+class IXml(object):
 
     def toString(self):
         '''
@@ -18,7 +18,7 @@ class IXml:
 
         Returns the contents if a node was found, None otherwise.
         '''
-        
+
     def setFirstNodeText(self, xpath, text):
         '''
         Finds the first node with the specified xpath and sets its contents to text.
@@ -26,7 +26,7 @@ class IXml:
         Returns True if a node was found, False otherwise.
         '''
 
-class Xml:
+class Xml(IXml):
 
     def __init__(self, rawXmlString):
 
@@ -58,7 +58,7 @@ class Xml:
 
         return result
 
-class XmlFactory:
+class XmlFactory(IXmlFactory):
 
     def create(self, rawXmlString):
         return Xml(rawXmlString)

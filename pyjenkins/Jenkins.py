@@ -2,13 +2,13 @@ from pyjenkins import httpstatus
 from pyjenkins.Job import JobFactory
 from pyjenkins.Json import Json
 
-class IJenkins:
-
+class IJenkins(object):
+    
     def copyJob(self, sourceJobName, targetJobName):
         '''
         Returns target job on success, or None on failure.
         '''
-    
+
     def listJobs(self):
         '''
         Returns a list of job names.

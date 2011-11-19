@@ -1,13 +1,14 @@
 from pyjenkins.Xml import Xml
 
-class IConfigurationFactory:
+class IConfigurationFactory(object):
 
     def create(self, rawXml):
         '''
         Create a IConfiguration instance from the raw xml provided.
         '''
 
-class IConfiguration:
+
+class IConfiguration(object):
 
     def rawXml(self):
         '''

@@ -1,4 +1,4 @@
-class IJson:
+class IJson(object):
 
     def parse(self, jsonString):
         '''
@@ -7,7 +7,7 @@ class IJson:
 
 import json
 
-class Json:
+class Json(IJson):
 
     def parse(self, jsonString):
 

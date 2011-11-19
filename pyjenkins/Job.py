@@ -1,7 +1,7 @@
 from pyjenkins import httpstatus
 from pyjenkins.Configuration import ConfigurationFactory
 
-class IJob:
+class IJob(object):
 
     def name(self):
         '''Return the name of the job.'''
@@ -82,8 +82,9 @@ class Job(IJob):
     def _configUrl(self):
         return '/'.join(['job', self._name, 'config.xml'])
 
-class IJobFactory:
-    
+
+class IJobFactory(object):
+
     def create(self, http):
         pass
 

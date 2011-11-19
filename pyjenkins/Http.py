@@ -1,7 +1,7 @@
 from pyjenkins.UrlBuilder import UrlBuilderFactory
 from pyjenkins.Request import Urllib2RequestFactory
 
-class IHttp:
+class IHttp(object):
 
     def request(self, path, arguments={}, postData=None):
         '''

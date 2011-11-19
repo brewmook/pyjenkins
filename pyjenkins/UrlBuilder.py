@@ -1,11 +1,11 @@
 import urllib
 
-class IUrlBuilderFactory:
+class IUrlBuilderFactory(object):
 
     def create(self):
         pass
 
-class IUrlBuilder:
+class IUrlBuilder(object):
 
     def build(self, host, path, arguments={}):
         '''
@@ -13,7 +13,7 @@ class IUrlBuilder:
         '''
         pass
 
-class UrlBuilder:
+class UrlBuilder(IUrlBuilder):
 
     def __init__(self):
         pass
