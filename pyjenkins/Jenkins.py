@@ -1,4 +1,4 @@
-from pyjenkins import Http
+from pyjenkins import httpstatus
 from pyjenkins.Job import JobFactory
 from pyjenkins.Json import Json
 
@@ -44,7 +44,7 @@ class Jenkins(IJenkins):
         result= None
         (json, status) = self.http.request('api/json', {'depth':0})
 
-        if status == Http.OK:
+        if status == httpstatus.OK:
             data= self.json.parse(json)
             if 'jobs' in data:
                 result= [job['name'] for job in data['jobs']]

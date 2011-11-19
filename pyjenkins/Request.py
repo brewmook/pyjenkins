@@ -23,7 +23,7 @@ class IRequest:
 # urllib2 implementation
 # ----------------------------------------------------------------------
 
-#from pyjenkins import Http
+from pyjenkins import httpstatus
 
 class Urllib2Request(IRequest):
 
@@ -43,7 +43,7 @@ class Urllib2Request(IRequest):
 
         try:
             response = urllib2.urlopen(self.request, data=postData)
-            result= (response.read(), Http.OK)
+            result= (response.read(), httpstatus.OK)
         except urllib2.HTTPError as error:
             content= error.fp.read()
             result= (content, error.code)

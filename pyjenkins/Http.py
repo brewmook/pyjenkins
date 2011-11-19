@@ -1,10 +1,6 @@
 from pyjenkins.UrlBuilder import UrlBuilderFactory
 from pyjenkins.Request import Urllib2RequestFactory
 
-# Response constants
-OK = 200
-NOT_FOUND = 404
-
 class IHttp:
 
     def request(self, path, arguments={}, postData=None):

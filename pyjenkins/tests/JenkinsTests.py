@@ -1,7 +1,7 @@
 import mox
 from unittest import TestCase
 
-from pyjenkins import Http
+from pyjenkins import httpstatus
 from pyjenkins.Jenkins import Jenkins
 from pyjenkins.Http import IHttp
 from pyjenkins.Job import IJob, IJobFactory
@@ -102,7 +102,7 @@ class JenkinsTests(TestCase):
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJson)
 
-        http.request('api/json', {'depth': 0}).AndReturn(('whatever', Http.NOT_FOUND))
+        http.request('api/json', {'depth': 0}).AndReturn(('whatever', httpstatus.NOT_FOUND))
 
         mocks.ReplayAll()
 
@@ -119,7 +119,7 @@ class JenkinsTests(TestCase):
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJson)
 
-        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', httpstatus.OK))
         json.parse('json response').AndReturn({'pies':3})
 
         mocks.ReplayAll()
@@ -137,7 +137,7 @@ class JenkinsTests(TestCase):
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJson)
 
-        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', httpstatus.OK))
         json.parse('json response').AndReturn({'jobs':[]})
 
         mocks.ReplayAll()
@@ -155,7 +155,7 @@ class JenkinsTests(TestCase):
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJson)
 
-        http.request('api/json', {'depth': 0}).AndReturn(('json response', Http.OK))
+        http.request('api/json', {'depth': 0}).AndReturn(('json response', httpstatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'winston'},
                                                        {'name':'geoff'}
                                                        ]})
