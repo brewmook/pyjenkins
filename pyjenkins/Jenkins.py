@@ -1,6 +1,6 @@
 from pyjenkins import httpstatus
 from pyjenkins.Job import JobFactory
-from pyjenkins.Json import Json
+from pyjenkins.JsonParser import JsonParser
 
 class IJenkins(object):
     
@@ -27,7 +27,7 @@ class Jenkins(IJenkins):
     def __init__(self, http):
         self.http= http
         self.jobFactory = JobFactory(http)
-        self.json = Json()
+        self.json = JsonParser()
 
     def copyJob(self, sourceJobName, targetJobName):
         sourceJob= self.jobFactory.create(sourceJobName)
