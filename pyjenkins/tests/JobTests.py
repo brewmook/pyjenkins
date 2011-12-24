@@ -4,7 +4,7 @@ from unittest import TestCase
 from pyjenkins import httpstatus
 from pyjenkins.Job import Job
 from pyjenkins.Http import IHttp
-from pyjenkins.Configuration import IConfiguration, IConfigurationFactory
+from pyjenkins.interfaces import IConfiguration, IConfigurationFactory
 
 class JobTests(TestCase):
 
@@ -15,7 +15,7 @@ class JobTests(TestCase):
 
     def test_exists_HttpRequestReturnsOK_ReturnTrue(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
         http.request("job/jobName/config.xml").AndReturn(("blah", httpstatus.OK))
@@ -29,7 +29,7 @@ class JobTests(TestCase):
 
     def test_exists_HttpRequestReturnsNotFound_ReturnFalse(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
         http.request("job/jobName/config.xml").AndReturn(("blah", httpstatus.NOT_FOUND))
@@ -42,7 +42,7 @@ class JobTests(TestCase):
 
     def test_configuration_HttpRequestReturnsOK_ReturnSomeXml(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         configurationFactory = mocks.CreateMock(IConfigurationFactory)
         configuration = mocks.CreateMock(IConfiguration)
@@ -60,7 +60,7 @@ class JobTests(TestCase):
 
     def test_configuration_HttpRequestReturnsNotFound_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
         http.request("job/jobName/config.xml").AndReturn(("error text", httpstatus.NOT_FOUND))
@@ -73,7 +73,7 @@ class JobTests(TestCase):
 
     def test_createCopy_HttpRequestReturnsOK_ReturnTrue(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
         http.request("createItem",
@@ -91,7 +91,7 @@ class JobTests(TestCase):
 
     def test_createCopy_HttpRequestReturnsNotOK_ReturnFalse(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
         http.request("createItem",
@@ -109,7 +109,7 @@ class JobTests(TestCase):
 
     def test_setConfiguration_HttpRequestReturnsOK_ReturnTrue(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         configuration = mocks.CreateMock(IConfiguration)
 
@@ -125,7 +125,7 @@ class JobTests(TestCase):
 
     def test_setConfiguration_HttpRequestReturnsNotOK_ReturnFalse(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         configuration = mocks.CreateMock(IConfiguration)
 

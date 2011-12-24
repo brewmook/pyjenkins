@@ -17,13 +17,13 @@ class IJob(object):
     def configuration(self):
         """
         Fetch the configuration from the server. No cacheing.
-        @rtype: pyjenkins.Configuration.IConfiguration
+        @rtype: pyjenkins.interfaces.IConfiguration
         """
 
     def setConfiguration(self, configuration):
         """
         Send the configuration to the remote server. No cacheing.
-        @type configuration: pyjenkins.Configuration.IConfiguration
+        @type configuration: pyjenkins.interfaces.IConfiguration
         @return: True if the server accepted the configuration, False otherwise.
         @rtype: bool
         """
