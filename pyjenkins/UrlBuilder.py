@@ -1,25 +1,5 @@
 import urllib
-
-class IUrlBuilderFactory(object):
-
-    def create(self):
-        """
-        @rtype: pyjenkins.UrlBuilder.IUrlBuilder
-        """
-
-class IUrlBuilder(object):
-
-    def build(self, host, path, arguments=None):
-        """
-        @param host: E.g. 'http://pies.com'
-        @type  host: str
-        @param path: The path part of the url, e.g. 'cgi-bin/something.py'
-        @type  path: str
-        @param arguments: key-value pairs will be added to the url as query arguments
-        @type  arguments: dict
-        @return: A well-formed url created from the constituent parts
-        @rtype: str
-        """
+from pyjenkins.interfaces import IUrlBuilder, IUrlBuilderFactory
 
 class UrlBuilder(IUrlBuilder):
 

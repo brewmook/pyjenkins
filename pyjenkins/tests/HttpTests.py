@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pyjenkins.Http import Http
 
-from pyjenkins.UrlBuilder import IUrlBuilder, IUrlBuilderFactory
+from pyjenkins.interfaces import IUrlBuilder, IUrlBuilderFactory
 from pyjenkins.Request import IRequest, IRequestFactory
 
 class HttpTests(TestCase):
@@ -14,7 +14,7 @@ class HttpTests(TestCase):
         arguments = { 'something' : 'whatever' }
         postData = 'blah blah'
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         urlBuilder= mocks.CreateMock(IUrlBuilder)
         urlBuilderFactory= mocks.CreateMock(IUrlBuilderFactory)
         request= mocks.CreateMock(IRequest)
@@ -40,7 +40,7 @@ class HttpTests(TestCase):
         arguments = { 'something' : 'whatever' }
         postData = 'blah blah'
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         urlBuilder= mocks.CreateMock(IUrlBuilder)
         urlBuilderFactory= mocks.CreateMock(IUrlBuilderFactory)
         request= mocks.CreateMock(IRequest)
