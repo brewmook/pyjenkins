@@ -44,6 +44,26 @@ class IConfigurationFactory(object):
         @rtype: pyjenkins.interfaces.IConfiguration
         """
 
+class IJenkins(object):
+
+    def copyJob(self, sourceJobName, targetJobName):
+        """
+        @return: target job on success, or None on failure.
+        @rtype:  pyjenkins.Job.IJob
+        """
+
+    def listJobs(self):
+        """
+        @return: list of job names
+        @rtype: [str]
+        """
+
+    def getJob(self, jobName):
+        """
+        @return: job instance if it exists, or None otherwise.
+        @rtype:  pyjenkins.Job.IJob
+        """
+
 class IHttp(object):
 
     def request(self, path, arguments=None, postData=None):

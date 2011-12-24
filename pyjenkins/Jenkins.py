@@ -1,26 +1,7 @@
 from pyjenkins import httpstatus
 from pyjenkins.Job import JobFactory
 from pyjenkins.JsonParser import JsonParser
-
-class IJenkins(object):
-    
-    def copyJob(self, sourceJobName, targetJobName):
-        """
-        @return: target job on success, or None on failure.
-        @rtype:  pyjenkins.Job.IJob
-        """
-
-    def listJobs(self):
-        """
-        @return: list of job names
-        @rtype: [str]
-        """
-
-    def getJob(self, jobName):
-        """
-        @return: job instance if it exists, or None otherwise.
-        @rtype:  pyjenkins.Job.IJob
-        """
+from pyjenkins.interfaces import IJenkins
 
 class Jenkins(IJenkins):
 
