@@ -174,3 +174,35 @@ class IUrlBuilderFactory(object):
         """
         @rtype: pyjenkins.interfaces.IUrlBuilder
         """
+
+class IXml(object):
+
+    def toString(self):
+        """
+        @return: raw xml string
+        @rtype: str
+        """
+
+    def getFirstNodeText(self, xpath):
+        """
+        Finds the first node with the specified xpath and returns its contents as text.
+        @param xpath: xpath location of
+        @type  xpath: str
+        @return: The contents as a string if a node was found, None otherwise.
+        @rtype: str
+        """
+
+    def setFirstNodeText(self, xpath, text):
+        """
+        Finds the first node with the specified xpath and sets its contents to text.
+
+        Returns True if a node was found, False otherwise.
+        """
+
+class IXmlFactory(object):
+
+    def create(self, rawXmlString):
+        """
+        @type rawXmlString: str
+        @rtype: pyjenkins.interfaces.IXml
+        """
