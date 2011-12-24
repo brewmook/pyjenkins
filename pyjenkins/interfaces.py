@@ -43,3 +43,17 @@ class IConfigurationFactory(object):
         @type rawXml: str
         @rtype: pyjenkins.interfaces.IConfiguration
         """
+
+class IHttp(object):
+
+    def request(self, path, arguments=None, postData=None):
+        """
+        @param path: The path part of the url, e.g. 'cgi-bin/something.py'
+        @type path:  str
+        @param arguments: key-value pairs will be added to the url as query arguments.
+        @type arguments: dict
+        @param postData: data to be sent via POST method. Default is to send via GET.
+        @type  postData: str
+        @return: Tuple representing content and http status code
+        @rtype: (str, int)
+        """

@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pyjenkins import httpstatus
 from pyjenkins.Jenkins import Jenkins
-from pyjenkins.Http import IHttp
+from pyjenkins.interfaces import IHttp
 from pyjenkins.Job import IJob, IJobFactory
 from pyjenkins.JsonParser import IJsonParser
 
@@ -11,7 +11,7 @@ class JenkinsTests(TestCase):
 
     def test_copyJob_SourceExistsAndTargetDoesNotExistCopySuccess_ReturnTargetJob(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         jobFactory= mocks.CreateMock(IJobFactory)
         sourceJob= mocks.CreateMock(IJob)
@@ -34,7 +34,7 @@ class JenkinsTests(TestCase):
 
     def test_copyJob_SourceJobDoesNotExist_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         jobFactory= mocks.CreateMock(IJobFactory)
         sourceJob= mocks.CreateMock(IJob)
@@ -53,7 +53,7 @@ class JenkinsTests(TestCase):
 
     def test_copyJob_TargetAlreadyExists_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         jobFactory= mocks.CreateMock(IJobFactory)
         sourceJob= mocks.CreateMock(IJob)
@@ -75,7 +75,7 @@ class JenkinsTests(TestCase):
 
     def test_copyJob_CopyFails_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         jobFactory= mocks.CreateMock(IJobFactory)
         sourceJob= mocks.CreateMock(IJob)
@@ -98,7 +98,7 @@ class JenkinsTests(TestCase):
 
     def test_listJobs_HttpRequestNotOk_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJsonParser)
 
@@ -115,7 +115,7 @@ class JenkinsTests(TestCase):
 
     def test_listJobs_JsonResultHasNoJobsElement_ReturnNone(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJsonParser)
 
@@ -133,7 +133,7 @@ class JenkinsTests(TestCase):
 
     def test_listJobs_JsonResultContainsEmptyJobsList_ReturnEmptyList(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJsonParser)
 
@@ -151,7 +151,7 @@ class JenkinsTests(TestCase):
 
     def test_listJobs_JobsListHasSomeJobs_ReturnJobNamesInList(self):
 
-        mocks= mox.Mox();
+        mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
         json= mocks.CreateMock(IJsonParser)
 
