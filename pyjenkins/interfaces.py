@@ -120,3 +120,12 @@ class IJobFactory(object):
         @type name: str
         @rtype: pyjenkins.interfaces.IJob
         """
+
+class IJsonParser(object):
+
+    def parse(self, jsonString):
+        """
+        Convert the json string into a traversable dictionary.
+        @type jsonString: str
+        @rtype: dict
+        """

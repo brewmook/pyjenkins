@@ -1,13 +1,5 @@
-class IJsonParser(object):
-
-    def parse(self, jsonString):
-        """
-        Convert the json string into a traversable dictionary.
-        @type jsonString: str
-        @rtype: dict
-        """
-
 import json
+from pyjenkins.interfaces import IJsonParser
 
 class JsonParser(IJsonParser):
 
