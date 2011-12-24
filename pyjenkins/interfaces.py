@@ -129,3 +129,27 @@ class IJsonParser(object):
         @type jsonString: str
         @rtype: dict
         """
+
+class IRequest(object):
+
+    def setBasicAuthorisation(self, username, password):
+        """
+        @type username: str
+        @type password: str
+        """
+
+    def open(self, postData=None):
+        """
+        @param postData: data to be sent via POST method. Default is to send via GET.
+        @type  postData: str
+        @return: Tuple representing content and http status code
+        @rtype: (str, int)
+        """
+
+class IRequestFactory(object):
+
+    def create(self, url):
+        """
+        @type url: str
+        @rtype: pyjenkins.interfaces.IRequest
+        """

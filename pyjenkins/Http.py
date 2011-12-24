@@ -18,7 +18,7 @@ class Http(IHttp):
         @type username: str
         @type password: str
         @type urlBuilderFactory: pyjenkins.UrlBuilder.IUrlBuilderFactory
-        @type requestFactory: pyjenkins.Request.IRequestFactory
+        @type requestFactory: pyjenkins.interfaces.IRequestFactory
         """
         self.host= host
         self.username= username
