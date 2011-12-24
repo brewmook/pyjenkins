@@ -1,40 +1,6 @@
 from pyjenkins import httpstatus
 from pyjenkins.Configuration import ConfigurationFactory
-
-class IJob(object):
-
-    def name(self):
-        """
-        @rtype: str
-        """
-
-    def exists(self):
-        """
-        @return: True if the job exists, False otherwise.
-        @rtype: bool
-        """
-
-    def configuration(self):
-        """
-        Fetch the configuration from the server. No cacheing.
-        @rtype: pyjenkins.interfaces.IConfiguration
-        """
-
-    def setConfiguration(self, configuration):
-        """
-        Send the configuration to the remote server. No cacheing.
-        @type configuration: pyjenkins.interfaces.IConfiguration
-        @return: True if the server accepted the configuration, False otherwise.
-        @rtype: bool
-        """
-
-    def createCopy(self, otherJobName):
-        """
-        Create a job on the host with self.name, copying settings from otherJobName.
-        @type otherJobName: str
-        @return: True if the job was created, False otherwise.
-        @rtype: bool
-        """
+from pyjenkins.interfaces import IJob, IJobFactory
 
 class Job(IJob):
 
@@ -92,11 +58,6 @@ class Job(IJob):
     def _configUrl(self):
         return '/'.join(['job', self._name, 'config.xml'])
 
-
-class IJobFactory(object):
-
-    def create(self, http):
-        pass
 
 class JobFactory(IJobFactory):
 

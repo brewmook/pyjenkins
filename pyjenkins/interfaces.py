@@ -44,26 +44,6 @@ class IConfigurationFactory(object):
         @rtype: pyjenkins.interfaces.IConfiguration
         """
 
-class IJenkins(object):
-
-    def copyJob(self, sourceJobName, targetJobName):
-        """
-        @return: target job on success, or None on failure.
-        @rtype:  pyjenkins.Job.IJob
-        """
-
-    def listJobs(self):
-        """
-        @return: list of job names
-        @rtype: [str]
-        """
-
-    def getJob(self, jobName):
-        """
-        @return: job instance if it exists, or None otherwise.
-        @rtype:  pyjenkins.Job.IJob
-        """
-
 class IHttp(object):
 
     def request(self, path, arguments=None, postData=None):
@@ -76,4 +56,67 @@ class IHttp(object):
         @type  postData: str
         @return: Tuple representing content and http status code
         @rtype: (str, int)
+        """
+
+class IJenkins(object):
+
+    def copyJob(self, sourceJobName, targetJobName):
+        """
+        @return: target job on success, or None on failure.
+        @rtype:  pyjenkins.interfaces.IJob
+        """
+
+    def listJobs(self):
+        """
+        @return: list of job names
+        @rtype: [str]
+        """
+
+    def getJob(self, jobName):
+        """
+        @return: job instance if it exists, or None otherwise.
+        @rtype:  pyjenkins.interfaces.IJob
+        """
+
+class IJob(object):
+
+    def name(self):
+        """
+        @rtype: str
+        """
+
+    def exists(self):
+        """
+        @return: True if the job exists, False otherwise.
+        @rtype: bool
+        """
+
+    def configuration(self):
+        """
+        Fetch the configuration from the server. No cacheing.
+        @rtype: pyjenkins.interfaces.IConfiguration
+        """
+
+    def setConfiguration(self, configuration):
+        """
+        Send the configuration to the remote server. No cacheing.
+        @type configuration: pyjenkins.interfaces.IConfiguration
+        @return: True if the server accepted the configuration, False otherwise.
+        @rtype: bool
+        """
+
+    def createCopy(self, otherJobName):
+        """
+        Create a job on the host with self.name, copying settings from otherJobName.
+        @type otherJobName: str
+        @return: True if the job was created, False otherwise.
+        @rtype: bool
+        """
+
+class IJobFactory(object):
+
+    def create(self, name):
+        """
+        @type name: str
+        @rtype: pyjenkins.interfaces.IJob
         """
