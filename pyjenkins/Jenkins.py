@@ -26,12 +26,19 @@ class Jenkins(IJenkins):
     
     def listJobs(self):
         result= None
-        (json, status) = self.http.request('api/json', {'depth':0})
+        jobs= self._getJsonJobs({'depth':0})
 
-        if status == httpstatus.OK:
-            data= self.json.parse(json)
-            if 'jobs' in data:
-                result= [job['name'] for job in data['jobs']]
+        if jobs is not None:
+            result= [job['name'] for job in jobs]
+
+        return result
+
+    def listFailingJobs(self):
+        result= None
+        jobs= self._getJsonJobs({'tree':'jobs[name,color]'})
+
+        if jobs is not None:
+            result= [job['name'] for job in jobs if job['color'] is 'red']
 
         return result
 
@@ -41,3 +48,14 @@ class Jenkins(IJenkins):
         if not job.exists():
             job= None
         return job
+
+    def _getJsonJobs(self, parameters):
+        result= None
+        (json, status) = self.http.request('api/json', parameters)
+
+        if status == httpstatus.OK:
+            data= self.json.parse(json)
+            if 'jobs' in data:
+                result= data['jobs']
+
+        return result

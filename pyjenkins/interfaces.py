@@ -88,6 +88,12 @@ class IJenkins(object):
         @rtype: [str]
         """
 
+    def listFailingJobs(self):
+        """
+        @return: list of failing job names
+        @rtype: [str]
+        """
+
     def getJob(self, jobName):
         """
         @return: job instance if it exists, or None otherwise.

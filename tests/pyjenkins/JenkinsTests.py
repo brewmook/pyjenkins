@@ -166,6 +166,115 @@ class JenkinsTests(TestCase):
 
         self.assertEqual(['winston', 'geoff'], result)
 
+    def test_listFailingJobs_JsonResultContainsEmptyJobsList_ReturnEmptyList(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        json.parse('json response').AndReturn({'jobs':[]})
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual([], result)
+
+    def test_listFailingJobs_JobsListHasOneJobWithColorRed_ReturnJobNameInList(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        json.parse('json response').AndReturn({'jobs':[{'name':'eric', 'color':'red'}]})
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual(['eric'], result)
+
+    def test_listFailingJobs_JobsListHasTwoJobsButOnlyOneWithColorRed_ReturnRedJobNameInList(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        json.parse('json response').AndReturn({'jobs':[{'name':'eric', 'color':'red'},
+                                                       {'name':'sir lancelot', 'color':'blue'}]})
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual(['eric'], result)
+
+    def test_listFailingJobs_TriangulationJobsListHasSeveralJobsWithSomeRed_ReturnRedJobNameInList(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        json.parse('json response').AndReturn({'jobs':[{'name':'sir lancelot', 'color':'blue'},
+                                                       {'name':'john', 'color':'red'},
+                                                       {'name':'sir galahad', 'color':'blue. no. yell...'},
+                                                       {'name':'graham', 'color':'red'}
+                                                      ]})
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual(['john', 'graham'], result)
+
+    def test_listFailingJobs_HttpRequestNotOk_ReturnNone(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('whatever', httpstatus.NOT_FOUND))
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual(None, result)
+
+    def test_listFailingJobs_JsonResultHasNoJobsElement_ReturnNone(self):
+
+        mocks= mox.Mox()
+        http= mocks.CreateMock(IHttp)
+        json= mocks.CreateMock(IJsonParser)
+
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        json.parse('json response').AndReturn({'spam':3})
+
+        mocks.ReplayAll()
+
+        jenkins = Jenkins(http)
+        jenkins.json= json
+
+        result= jenkins.listFailingJobs()
+
+        self.assertEqual(None, result)
+
     def test_getJob_JobExists_ReturnJob(self):
 
         mocks= mox.Mox()
