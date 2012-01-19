@@ -82,15 +82,10 @@ class IJenkins(object):
         @rtype:  pyjenkins.interfaces.IJob
         """
 
-    def listJobs(self):
+    def listJobs(self, jobFilter):
         """
+        @type jobFilter: pyjenkins.interfaces.IJobFilter
         @return: list of job names
-        @rtype: [str]
-        """
-
-    def listFailingJobs(self):
-        """
-        @return: list of failing job names
         @rtype: [str]
         """
 
@@ -141,6 +136,14 @@ class IJobFactory(object):
         """
         @type name: str
         @rtype: pyjenkins.interfaces.IJob
+        """
+
+class IJobFilter(object):
+
+    def includeJob(self, job, color):
+        """
+        @type job: str
+        @type color: str
         """
 
 class IJsonParser(object):

@@ -24,21 +24,17 @@ class Jenkins(IJenkins):
             
         return result
     
-    def listJobs(self):
-        result= None
-        jobs= self._getJsonJobs({'depth':0})
-
-        if jobs is not None:
-            result= [job['name'] for job in jobs]
-
-        return result
-
-    def listFailingJobs(self):
+    def listJobs(self, jobFilter):
+        """
+        @type jobFilter: pyjenkins.interfaces.IJobFilter
+        @return: list of job names
+        @rtype: [str]
+        """
         result= None
         jobs= self._getJsonJobs({'tree':'jobs[name,color]'})
 
         if jobs is not None:
-            result= [job['name'] for job in jobs if job['color'] is 'red']
+            result= [job['name'] for job in jobs if jobFilter.includeJob(job['name'],job['color'])]
 
         return result
 
