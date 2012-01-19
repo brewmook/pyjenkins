@@ -76,23 +76,11 @@ class IHttp(object):
 
 class IJenkins(object):
 
-    def copyJob(self, sourceJobName, targetJobName):
-        """
-        @return: target job on success, or None on failure.
-        @rtype:  pyjenkins.interfaces.IJob
-        """
-
     def listJobs(self, jobFilter):
         """
         @type jobFilter: pyjenkins.interfaces.IJobFilter
         @return: list of job names
         @rtype: [str]
-        """
-
-    def getJob(self, jobName):
-        """
-        @return: job instance if it exists, or None otherwise.
-        @rtype:  pyjenkins.interfaces.IJob
         """
 
 class IJob(object):

@@ -3,96 +3,9 @@ from unittest import TestCase
 
 from pyjenkins import httpstatus
 from pyjenkins.Jenkins import Jenkins
-from pyjenkins.interfaces import IHttp, IJob, IJobFactory, IJobFilter, IJsonParser
+from pyjenkins.interfaces import IHttp, IJobFilter, IJsonParser
 
 class JenkinsTests(TestCase):
-
-    def test_copyJob_SourceExistsAndTargetDoesNotExistCopySuccess_ReturnTargetJob(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        sourceJob= mocks.CreateMock(IJob)
-        targetJob= mocks.CreateMock(IJob)
-        
-        jobFactory.create('source').AndReturn(sourceJob)
-        jobFactory.create('target').AndReturn(targetJob)
-        sourceJob.exists().AndReturn(True)
-        targetJob.exists().AndReturn(False)
-        targetJob.createCopy('source').AndReturn(True)
-
-        mocks.ReplayAll()
-
-        jenkins = Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.copyJob('source', 'target')
-
-        self.assertEqual(targetJob, result)
-
-    def test_copyJob_SourceJobDoesNotExist_ReturnNone(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        sourceJob= mocks.CreateMock(IJob)
-        
-        jobFactory.create('source').AndReturn(sourceJob)
-        sourceJob.exists().AndReturn(False)
-
-        mocks.ReplayAll()
-
-        jenkins = Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.copyJob('source', 'target')
-
-        self.assertEqual(None, result)
-
-    def test_copyJob_TargetAlreadyExists_ReturnNone(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        sourceJob= mocks.CreateMock(IJob)
-        targetJob= mocks.CreateMock(IJob)
-        
-        jobFactory.create('source').AndReturn(sourceJob)
-        jobFactory.create('target').AndReturn(targetJob)
-        sourceJob.exists().AndReturn(True)
-        targetJob.exists().AndReturn(True)
-
-        mocks.ReplayAll()
-
-        jenkins = Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.copyJob('source', 'target')
-
-        self.assertEqual(None, result)
-
-    def test_copyJob_CopyFails_ReturnNone(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        sourceJob= mocks.CreateMock(IJob)
-        targetJob= mocks.CreateMock(IJob)
-        
-        jobFactory.create('source').AndReturn(sourceJob)
-        jobFactory.create('target').AndReturn(targetJob)
-        sourceJob.exists().AndReturn(True)
-        targetJob.exists().AndReturn(False)
-        targetJob.createCopy('source').AndReturn(False)
-
-        mocks.ReplayAll()
-
-        jenkins = Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.copyJob('source', 'target')
-
-        self.assertEqual(None, result)
 
     def test_listJobs_HttpRequestNotOk_ReturnNone(self):
 
@@ -107,8 +20,7 @@ class JenkinsTests(TestCase):
 
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -127,8 +39,7 @@ class JenkinsTests(TestCase):
 
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -147,8 +58,7 @@ class JenkinsTests(TestCase):
 
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -169,8 +79,7 @@ class JenkinsTests(TestCase):
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).AndReturn(True)
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -191,8 +100,7 @@ class JenkinsTests(TestCase):
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).AndReturn(False)
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -213,8 +121,7 @@ class JenkinsTests(TestCase):
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).InAnyOrder().AndReturn(False)
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
@@ -235,47 +142,8 @@ class JenkinsTests(TestCase):
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).InAnyOrder().AndReturn(False)
         mocks.ReplayAll()
 
-        jenkins = Jenkins(http)
-        jenkins.json= json
+        jenkins = Jenkins(http, json)
 
         result= jenkins.listJobs(filter)
 
         self.assertEqual(['winston'], result)
-
-    def test_getJob_JobExists_ReturnJob(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        job= mocks.CreateMock(IJob)
-
-        jobFactory.create('source').AndReturn(job)
-        job.exists().AndReturn(True)
-
-        mocks.ReplayAll()
-
-        jenkins= Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.getJob('source')
-        
-        self.assertEqual(job, result)
-
-    def test_getJob_JobDoesNotExist_ReturnNone(self):
-
-        mocks= mox.Mox()
-        http= mocks.CreateMock(IHttp)
-        jobFactory= mocks.CreateMock(IJobFactory)
-        job= mocks.CreateMock(IJob)
-
-        jobFactory.create('source').AndReturn(job)
-        job.exists().AndReturn(False)
-
-        mocks.ReplayAll()
-
-        jenkins= Jenkins(http)
-        jenkins.jobFactory= jobFactory
-
-        result= jenkins.getJob('source')
-        
-        self.assertEqual(None, result)
