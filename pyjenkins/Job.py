@@ -1,6 +1,6 @@
 class JobStatus(object):
-    FAILING = "FAILING"
     OK = "OK"
+    FAILING = "FAILING"
     UNKNOWN = "UNKNOWN"
 
 class Job(object):
@@ -11,5 +11,9 @@ class Job(object):
 
     def __eq__(self, other):
 
-        return self.name == other.name \
-           and self.status == other.status
+        return self.name == other.name\
+        and self.status == other.status
+
+    def __repr__(self):
+
+        return 'Job(name=%r,status=%r)' % (self.name, self.status)

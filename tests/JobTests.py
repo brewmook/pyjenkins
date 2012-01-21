@@ -34,3 +34,8 @@ class JobTests(TestCase):
         jobTwo= Job('eggs', JobStatus.UNKNOWN)
 
         self.assertFalse(jobOne == jobTwo)
+
+    def test_repr_ReturnsSensibleResult(self):
+
+        job= Job('spam', JobStatus.OK)
+        self.assertEquals("Job(name='spam',status='OK')", job.__repr__())
