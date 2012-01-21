@@ -25,7 +25,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('//hudson.scm.SubversionSCM_-ModuleLocation/remote',
+        xml.setFirstNodeText('.//hudson.scm.SubversionSCM_-ModuleLocation/remote',
                              'http://host/path/to/repo') \
             .AndReturn('mangos')
         mocks.ReplayAll()
@@ -40,7 +40,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.getFirstNodeText('//hudson.scm.SubversionSCM_-ModuleLocation/remote') \
+        xml.getFirstNodeText('.//hudson.scm.SubversionSCM_-ModuleLocation/remote') \
             .AndReturn('http://host/path/to/repository')
         mocks.ReplayAll()
 
@@ -54,7 +54,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('//hudson.tasks.BuildTrigger/childProjects',
+        xml.setFirstNodeText('.//hudson.tasks.BuildTrigger/childProjects',
                              'tests job') \
             .AndReturn('kiwis')
         mocks.ReplayAll()
@@ -69,7 +69,7 @@ class ConfigurationTests(TestCase):
         mocks= mox.Mox()
         xml= mocks.CreateMock(IXml)
 
-        xml.setFirstNodeText('//hudson.plugins.copyartifact.CopyArtifact/projectName',
+        xml.setFirstNodeText('.//hudson.plugins.copyartifact.CopyArtifact/projectName',
                              'build job') \
             .AndReturn('bananas')
         mocks.ReplayAll()

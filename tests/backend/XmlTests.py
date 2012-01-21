@@ -16,7 +16,7 @@ class XmlTests(TestCase):
 
         xml= Xml('<element><other>text</other></element>')
 
-        xml.setFirstNodeText('//other', 'pies')
+        xml.setFirstNodeText('.//other', 'pies')
 
         result= xml.toString()
 
@@ -26,7 +26,7 @@ class XmlTests(TestCase):
 
         xml= Xml('<element><other>text</other></element>')
 
-        xml.setFirstNodeText('//notfound', 'whatever')
+        xml.setFirstNodeText('.//notfound', 'whatever')
 
         result= xml.toString()
 
@@ -36,7 +36,7 @@ class XmlTests(TestCase):
 
         xml= Xml("<?xml version='1.0' encoding='UTF-8'?>\n<element><other>text</other></element>")
 
-        xml.setFirstNodeText('//other', 'pies')
+        xml.setFirstNodeText('.//other', 'pies')
 
         result= xml.toString()
 
@@ -46,7 +46,7 @@ class XmlTests(TestCase):
 
         xml= Xml('<element><other>text</other></element>')
 
-        result= xml.setFirstNodeText('//pies', 'whatever')
+        result= xml.setFirstNodeText('.//pies', 'whatever')
 
         self.assertEqual(False, result)
 
@@ -54,7 +54,7 @@ class XmlTests(TestCase):
 
         xml= Xml('<element><other>text</other></element>')
 
-        result= xml.setFirstNodeText('//other', 'whatever')
+        result= xml.setFirstNodeText('.//other', 'whatever')
 
         self.assertEqual(True, result)
 
@@ -62,7 +62,7 @@ class XmlTests(TestCase):
 
         xml= Xml('<stuff><things>words words</things></stuff>')
 
-        result= xml.getFirstNodeText('//things')
+        result= xml.getFirstNodeText('.//things')
 
         self.assertEqual('words words', result)
 
@@ -70,6 +70,6 @@ class XmlTests(TestCase):
 
         xml= Xml('<stuff><things>words words</things></stuff>')
 
-        result= xml.getFirstNodeText('//friday')
+        result= xml.getFirstNodeText('.//friday')
 
         self.assertEqual(None, result)
