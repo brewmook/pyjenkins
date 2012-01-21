@@ -1,6 +1,6 @@
 from xml.etree import ElementTree
 
-from interfaces import IXml, IXmlFactory
+from pyjenkins.backend.interfaces import IXml, IXmlFactory
 
 class Xml(IXml):
 

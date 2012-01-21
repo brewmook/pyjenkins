@@ -1,7 +1,7 @@
 import mox
 from unittest import TestCase
 
-from pyjenkins import httpstatus
+from pyjenkins.backend.enums import HttpStatus
 from pyjenkins.Jenkins import Jenkins
 from pyjenkins.interfaces import IJobFilter
 from pyjenkins.backend.interfaces import IHttp, IJsonParser
@@ -15,7 +15,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('whatever', httpstatus.NOT_FOUND))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('whatever', HttpStatus.NOT_FOUND))
         json.parse('whatever').AndReturn({'pies':3})
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).AndReturn(True)
 
@@ -34,7 +34,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'pies':3})
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).AndReturn(True)
 
@@ -53,7 +53,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[]})
         filter.includeJob(mox.IgnoreArg(), mox.IgnoreArg()).AndReturn(True)
 
@@ -72,7 +72,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'winston', 'color':'red'},
                                                        {'name':'geoff', 'color':'blue'}
                                                        ]})
@@ -93,7 +93,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'winston', 'color':'red'},
                                                        {'name':'geoff', 'color':'blue'}
                                                       ]})
@@ -114,7 +114,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'winston', 'color':'red'},
                                                        {'name':'geoff', 'color':'blue'}
                                                       ]})
@@ -135,7 +135,7 @@ class JenkinsTests(TestCase):
         json= mocks.CreateMock(IJsonParser)
         filter= mocks.CreateMock(IJobFilter)
 
-        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', httpstatus.OK))
+        http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'winston', 'color':'red'},
                                                        {'name':'geoff', 'color':'blue'}
                                                       ]})

@@ -1,5 +1,5 @@
 import urllib
-from interfaces import IUrlBuilder, IUrlBuilderFactory
+from pyjenkins.backend.interfaces import IUrlBuilder, IUrlBuilderFactory
 
 class UrlBuilder(IUrlBuilder):
 

@@ -1,6 +1,6 @@
-from pyjenkins import httpstatus
 from pyjenkins.Configuration import ConfigurationFactory
 from pyjenkins.interfaces import IJob, IJobFactory
+from pyjenkins.backend.enums import HttpStatus
 
 class Job(IJob):
 
@@ -17,7 +17,7 @@ class Job(IJob):
         url= self._configUrl()
         (text, returnCode) = self.http.request(url)
 
-        if returnCode != httpstatus.OK:
+        if returnCode != HttpStatus.OK:
             result= False
 
         return result
@@ -27,7 +27,7 @@ class Job(IJob):
         url= self._configUrl()
         (contents, returnCode) = self.http.request(url)
 
-        if returnCode == httpstatus.OK:
+        if returnCode == HttpStatus.OK:
             result= self.configurationFactory.create(contents)
 
         return result
@@ -37,7 +37,7 @@ class Job(IJob):
         url= self._configUrl()
         (content, returnCode) = self.http.request(url, postData=aConfiguration.rawXml())
 
-        if returnCode != httpstatus.OK:
+        if returnCode != HttpStatus.OK:
             result= False
             
         return result
@@ -50,7 +50,7 @@ class Job(IJob):
         (content, returnCode) = self.http.request('createItem',
                                                   postData="",
                                                   arguments=arguments)
-        if returnCode != httpstatus.OK:
+        if returnCode != HttpStatus.OK:
             result= False
             
         return result

@@ -1,5 +1,5 @@
-from pyjenkins import httpstatus
 from pyjenkins.interfaces import IJenkins
+from pyjenkins.backend.enums import HttpStatus
 from pyjenkins.backend.JsonParser import JsonParser
 
 class Jenkins(IJenkins):
@@ -30,7 +30,7 @@ class Jenkins(IJenkins):
         result= None
         (json, status) = self.http.request('api/json', parameters)
 
-        if status == httpstatus.OK:
+        if status == HttpStatus.OK:
             data= self.json.parse(json)
             if 'jobs' in data:
                 result= data['jobs']

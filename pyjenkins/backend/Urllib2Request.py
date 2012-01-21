@@ -5,8 +5,8 @@ import base64
 # urllib2 implementation
 # ----------------------------------------------------------------------
 
-from pyjenkins import httpstatus
-from interfaces import IRequest, IRequestFactory
+from pyjenkins.backend.enums import HttpStatus
+from pyjenkins.backend.interfaces import IRequest, IRequestFactory
 
 class Urllib2Request(IRequest):
 
@@ -26,7 +26,7 @@ class Urllib2Request(IRequest):
 
         try:
             response = urllib2.urlopen(self.request, data=postData)
-            result= (response.read(), httpstatus.OK)
+            result= (response.read(), HttpStatus.OK)
         except urllib2.HTTPError as error:
             content= error.fp.read()
             result= (content, error.code)

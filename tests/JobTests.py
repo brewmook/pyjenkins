@@ -1,9 +1,9 @@
 import mox
 from unittest import TestCase
 
-from pyjenkins import httpstatus
 from pyjenkins.Job import Job
 from pyjenkins.interfaces import IConfiguration, IConfigurationFactory
+from pyjenkins.backend.enums import HttpStatus
 from pyjenkins.backend.interfaces import IHttp
 
 class JobTests(TestCase):
@@ -18,7 +18,7 @@ class JobTests(TestCase):
         mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
-        http.request("job/jobName/config.xml").AndReturn(("blah", httpstatus.OK))
+        http.request("job/jobName/config.xml").AndReturn(("blah", HttpStatus.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -32,7 +32,7 @@ class JobTests(TestCase):
         mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
-        http.request("job/jobName/config.xml").AndReturn(("blah", httpstatus.NOT_FOUND))
+        http.request("job/jobName/config.xml").AndReturn(("blah", HttpStatus.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -47,7 +47,7 @@ class JobTests(TestCase):
         configurationFactory = mocks.CreateMock(IConfigurationFactory)
         configuration = mocks.CreateMock(IConfiguration)
 
-        http.request("job/jobName/config.xml").AndReturn(('some xml', httpstatus.OK))
+        http.request("job/jobName/config.xml").AndReturn(('some xml', HttpStatus.OK))
         configurationFactory.create('some xml').AndReturn(configuration)
         mocks.ReplayAll()
 
@@ -63,7 +63,7 @@ class JobTests(TestCase):
         mocks= mox.Mox()
         http= mocks.CreateMock(IHttp)
 
-        http.request("job/jobName/config.xml").AndReturn(("error text", httpstatus.NOT_FOUND))
+        http.request("job/jobName/config.xml").AndReturn(("error text", HttpStatus.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -81,7 +81,7 @@ class JobTests(TestCase):
                                  'mode':'copy',
                                  'from':'otherJob'},
                      postData= "") \
-           .AndReturn(("blah blah", httpstatus.OK))
+           .AndReturn(("blah blah", HttpStatus.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -99,7 +99,7 @@ class JobTests(TestCase):
                                  'mode':'copy',
                                  'from':'otherJob'},
                      postData= "") \
-           .AndReturn(("blah blah", httpstatus.NOT_FOUND))
+           .AndReturn(("blah blah", HttpStatus.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -115,7 +115,7 @@ class JobTests(TestCase):
 
         configuration.rawXml().AndReturn("raw xml")
         http.request("job/jobName/config.xml", postData="raw xml") \
-           .AndReturn(("blah blah", httpstatus.OK))
+           .AndReturn(("blah blah", HttpStatus.OK))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
@@ -131,7 +131,7 @@ class JobTests(TestCase):
 
         configuration.rawXml().AndReturn("raw xml")
         http.request("job/jobName/config.xml", postData="raw xml") \
-           .AndReturn(("error text", httpstatus.NOT_FOUND))
+           .AndReturn(("error text", HttpStatus.NOT_FOUND))
         mocks.ReplayAll()
 
         job= Job(http, "jobName")
