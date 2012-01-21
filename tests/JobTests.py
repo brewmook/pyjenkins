@@ -13,3 +13,24 @@ class JobTests(TestCase):
 
         job= Job('spam', JobStatus.FAILING)
         self.assertEqual(JobStatus.FAILING, job.status)
+
+    def test_equalityop_TwoEquivalentObjects_ReturnTrue(self):
+
+        jobOne= Job('spam', JobStatus.FAILING)
+        jobTwo= Job('spam', JobStatus.FAILING)
+
+        self.assertTrue(jobOne == jobTwo)
+
+    def test_equalityop_NamesDiffer_ReturnFalse(self):
+
+        jobOne= Job('spam', JobStatus.FAILING)
+        jobTwo= Job('eggs', JobStatus.FAILING)
+
+        self.assertFalse(jobOne == jobTwo)
+
+    def test_equalityop_StatusDiffer_ReturnFalse(self):
+
+        jobOne= Job('eggs', JobStatus.FAILING)
+        jobTwo= Job('eggs', JobStatus.UNKNOWN)
+
+        self.assertFalse(jobOne == jobTwo)
