@@ -2,7 +2,7 @@ import mox
 from unittest import TestCase
 
 from pyjenkins.Configuration import Configuration
-from pyjenkins.interfaces import IXml
+from pyjenkins.backend.interfaces import IXml
 
 class ConfigurationTests(TestCase):
 

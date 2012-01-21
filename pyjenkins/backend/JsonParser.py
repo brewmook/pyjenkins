@@ -1,5 +1,5 @@
 import json
-from pyjenkins.interfaces import IJsonParser
+from interfaces import IJsonParser
 
 class JsonParser(IJsonParser):
 

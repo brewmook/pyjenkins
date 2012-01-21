@@ -3,8 +3,8 @@ from unittest import TestCase
 
 from pyjenkins import httpstatus
 from pyjenkins.Job import Job
-from pyjenkins.interfaces import IHttp
 from pyjenkins.interfaces import IConfiguration, IConfigurationFactory
+from pyjenkins.backend.interfaces import IHttp
 
 class JobTests(TestCase):
 

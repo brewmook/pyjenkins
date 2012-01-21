@@ -1,7 +1,7 @@
-from pyjenkins.backend.UrlBuilder import UrlBuilderFactory
-from pyjenkins.backend.Urllib2Request import Urllib2RequestFactory
+from UrlBuilder import UrlBuilderFactory
+from Urllib2Request import Urllib2RequestFactory
 
-from pyjenkins.interfaces import IHttp
+from interfaces import IHttp
 
 class Http(IHttp):
     """

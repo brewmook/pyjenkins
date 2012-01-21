@@ -3,7 +3,8 @@ from unittest import TestCase
 
 from pyjenkins import httpstatus
 from pyjenkins.Jenkins import Jenkins
-from pyjenkins.interfaces import IHttp, IJobFilter, IJsonParser
+from pyjenkins.interfaces import IJobFilter
+from pyjenkins.backend.interfaces import IHttp, IJsonParser
 
 class JenkinsTests(TestCase):
 

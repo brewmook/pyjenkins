@@ -6,7 +6,7 @@ import base64
 # ----------------------------------------------------------------------
 
 from pyjenkins import httpstatus
-from pyjenkins.interfaces import IRequest, IRequestFactory
+from interfaces import IRequest, IRequestFactory
 
 class Urllib2Request(IRequest):
 
