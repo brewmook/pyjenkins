@@ -1,4 +1,4 @@
-from pyjenkins.Xml import Xml
+from pyjenkins.backend.Xml import Xml
 from pyjenkins.interfaces import IConfiguration, IConfigurationFactory
 
 # Constants

@@ -1,6 +1,6 @@
 from pyjenkins import httpstatus
-from pyjenkins.JsonParser import JsonParser
 from pyjenkins.interfaces import IJenkins
+from pyjenkins.backend.JsonParser import JsonParser
 
 class Jenkins(IJenkins):
 

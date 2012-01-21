@@ -1,10 +1,10 @@
 import mox
 from unittest import TestCase
 
-from pyjenkins.Http import Http
+from pyjenkins.backend.Http import Http
 
 from pyjenkins.interfaces import IUrlBuilder, IUrlBuilderFactory
-from pyjenkins.Request import IRequest, IRequestFactory
+from pyjenkins.backend.Urllib2Request import IRequest, IRequestFactory
 
 class HttpTests(TestCase):
 

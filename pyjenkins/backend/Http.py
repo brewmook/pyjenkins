@@ -1,5 +1,5 @@
-from pyjenkins.UrlBuilder import UrlBuilderFactory
-from pyjenkins.Request import Urllib2RequestFactory
+from pyjenkins.backend.UrlBuilder import UrlBuilderFactory
+from pyjenkins.backend.Urllib2Request import Urllib2RequestFactory
 
 from pyjenkins.interfaces import IHttp
 

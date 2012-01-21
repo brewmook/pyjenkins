@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pyjenkins.Xml import Xml
+from pyjenkins.backend.Xml import Xml
 
 class XmlTests(TestCase):
 
