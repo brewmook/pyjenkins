@@ -1,6 +1,7 @@
 from pyjenkins.interfaces import IJenkins
 from pyjenkins.backend.enums import HttpStatus
 from pyjenkins.backend.JsonParser import JsonParser
+from pyjenkins.Job import Job, JobStatus
 
 class Jenkins(IJenkins):
 
@@ -11,18 +12,20 @@ class Jenkins(IJenkins):
         """
         self.http= http
         self.json= json
+        self.statusMap = {'red':JobStatus.FAILING,
+                          'blue':JobStatus.OK,
+                          'grey':JobStatus.UNKNOWN }
 
-    def listJobs(self, jobFilter):
+    def listJobs(self):
         """
-        @type jobFilter: pyjenkins.interfaces.IJobFilter
-        @return: list of job names
-        @rtype: [str]
+        @return: list of Jobs
+        @rtype: [pyjenkins.Job]
         """
         result= None
         jobs= self._getJsonJobs({'tree':'jobs[name,color]'})
 
         if jobs is not None:
-            result= [job['name'] for job in jobs if jobFilter.includeJob(job['name'],job['color'])]
+            result= [Job(job['name'], self.statusMap[job['color']]) for job in jobs]
 
         return result
 

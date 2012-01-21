@@ -62,17 +62,8 @@ class IEvent(object):
 
 class IJenkins(object):
 
-    def listJobs(self, jobFilter):
+    def listJobs(self):
         """
-        @type jobFilter: pyjenkins.interfaces.IJobFilter
-        @return: list of job names
-        @rtype: [str]
-        """
-
-class IJobFilter(object):
-
-    def includeJob(self, job, color):
-        """
-        @type job: str
-        @type color: str
+        @return: list of Jobs
+        @rtype: [pyjenkins.Job.Job]
         """
