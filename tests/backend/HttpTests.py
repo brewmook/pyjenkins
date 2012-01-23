@@ -1,6 +1,7 @@
 import mox
 from unittest import TestCase
 
+from pyjenkins.server import Server
 from pyjenkins.backend.http import Http
 from pyjenkins.backend.interfaces import IRequest, IRequestFactory, IUrlBuilder, IUrlBuilderFactory
 
@@ -11,6 +12,7 @@ class HttpTests(TestCase):
         expectedResult = ("text", 123)
         arguments = { 'something' : 'whatever' }
         postData = 'blah blah'
+        server = Server('host', 'blah', 'blah')
 
         mocks= mox.Mox()
         urlBuilder= mocks.CreateMock(IUrlBuilder)
@@ -27,7 +29,7 @@ class HttpTests(TestCase):
 
         mocks.ReplayAll()
 
-        http= Http('host', 'blah', 'blah', urlBuilderFactory, requestFactory)
+        http= Http(server, urlBuilderFactory, requestFactory)
         result= http.request('path', arguments, postData)
 
         self.assertEqual(expectedResult, result)
@@ -37,6 +39,7 @@ class HttpTests(TestCase):
         expectedResult = ("text", 123)
         arguments = { 'something' : 'whatever' }
         postData = 'blah blah'
+        server = Server('host', 'username', 'password')
 
         mocks= mox.Mox()
         urlBuilder= mocks.CreateMock(IUrlBuilder)
@@ -53,7 +56,7 @@ class HttpTests(TestCase):
 
         mocks.ReplayAll()
 
-        http= Http('host', 'username', 'password', urlBuilderFactory, requestFactory)
+        http= Http(server, urlBuilderFactory, requestFactory)
         http.request('path', arguments, postData)
 
         mox.Verify(request)

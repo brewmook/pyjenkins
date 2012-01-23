@@ -8,29 +8,25 @@ class Http(IHttp):
     http://www.voidspace.org.uk/python/articles/authentication.shtml
     """
 
-    def __init__(self, host, username, password,
+    def __init__(self, server,
                  urlBuilderFactory = UrlBuilderFactory(),
                  requestFactory = Urllib2RequestFactory()):
         """
         @param host: e.g. http://www.wherever.com
-        @type host: str
-        @type username: str
-        @type password: str
+        @type server: pyjenkins.server.Server
         @type urlBuilderFactory: pyjenkins.urlbuilder.IUrlBuilderFactory
         @type requestFactory: pyjenkins.interfaces.IRequestFactory
         """
-        self.host= host
-        self.username= username
-        self.password= password
+        self.server= server
         self.requestFactory= requestFactory
         self.urlBuilderFactory= urlBuilderFactory
 
     def request(self, path, arguments=None, postData=None):
 
         builder= self.urlBuilderFactory.create()
-        url= builder.build(self.host, path, arguments)
+        url= builder.build(self.server.host, path, arguments)
 
         req= self.requestFactory.create(url)
-        req.setBasicAuthorisation(self.username, self.password)
+        req.setBasicAuthorisation(self.server.username, self.server.password)
 
         return req.open(postData)
