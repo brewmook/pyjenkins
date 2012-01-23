@@ -65,5 +65,5 @@ class IJenkins(object):
     def listJobs(self):
         """
         @return: list of Jobs
-        @rtype: [pyjenkins.Job.Job]
+        @rtype: [pyjenkins.job.Job]
         """

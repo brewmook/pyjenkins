@@ -24,7 +24,7 @@ class Jenkins(IJenkins):
     def listJobs(self):
         """
         @return: list of Jobs
-        @rtype: [pyjenkins.Job]
+        @rtype: [pyjenkins.job.Job]
         """
         result= None
         jobs= self._getJsonJobs({'tree':'jobs[name,color]'})
