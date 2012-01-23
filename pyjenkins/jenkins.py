@@ -1,7 +1,7 @@
 from pyjenkins.interfaces import IJenkins
 from pyjenkins.backend.enums import HttpStatus
-from pyjenkins.backend.JsonParser import JsonParser
-from pyjenkins.Job import Job, JobStatus
+from pyjenkins.backend.jsonparser import JsonParser
+from pyjenkins.job import Job, JobStatus
 
 class Jenkins(IJenkins):
 

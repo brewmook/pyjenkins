@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pyjenkins.Job import Job, JobStatus
+from pyjenkins.job import Job, JobStatus
 
 class JobTests(TestCase):
 

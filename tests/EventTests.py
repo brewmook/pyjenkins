@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pyjenkins.Event import Event
+from pyjenkins.event import Event
 
 class SingleArgumentHandler:
     def __init__(self):

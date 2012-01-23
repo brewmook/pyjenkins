@@ -2,9 +2,9 @@ import mox
 from unittest import TestCase
 
 from pyjenkins.backend.enums import HttpStatus
-from pyjenkins.Jenkins import Jenkins
 from pyjenkins.backend.interfaces import IHttp, IJsonParser
-from pyjenkins.Job import Job, JobStatus
+from pyjenkins.jenkins import Jenkins
+from pyjenkins.job import Job, JobStatus
 
 class JenkinsTests(TestCase):
 
