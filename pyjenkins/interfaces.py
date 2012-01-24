@@ -67,3 +67,11 @@ class IJenkins(object):
         @return: list of Jobs
         @rtype: [pyjenkins.job.Job]
         """
+
+class IJenkinsFactory(object):
+
+    def create(self, server):
+        """
+        @type server: pyjenkins.server.Server
+        @rtype: pyjenkins.interfaces.IJenkins
+        """

@@ -1,5 +1,6 @@
-from pyjenkins.interfaces import IJenkins
+from pyjenkins.interfaces import IJenkins, IJenkinsFactory
 from pyjenkins.backend.enums import HttpStatus
+from pyjenkins.backend.http import Http
 from pyjenkins.backend.jsonparser import JsonParser
 from pyjenkins.job import Job, JobStatus
 
@@ -51,3 +52,12 @@ class Jenkins(IJenkins):
                 result= data['jobs']
 
         return result
+
+class JenkinsFactory(IJenkinsFactory):
+
+    def create(self, server):
+        """
+        @type server: pyjenkins.server.Server
+        @rtype: pyjenkins.interfaces.IJenkins
+        """
+        return Jenkins(Http(server))
