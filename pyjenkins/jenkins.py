@@ -12,13 +12,20 @@ class Jenkins(IJenkins):
         """
         self.http= http
         self.json= json
-        self.statusMap = {'red':        JobStatus.FAILING,
-                          'red_anime':  JobStatus.FAILING,
-                          'blue':       JobStatus.OK,
-                          'blue_anime': JobStatus.OK,
-                          'grey':       JobStatus.UNKNOWN,
-                          'grey_anime': JobStatus.UNKNOWN,
-                          'disabled':   JobStatus.UNKNOWN
+        self.statusMap = {'aborted':        JobStatus.UNKNOWN,
+                          'aborted_anime':  JobStatus.UNKNOWN,
+                          'blue':           JobStatus.OK,
+                          'blue_anime':     JobStatus.OK,
+                          'disabled':       JobStatus.UNKNOWN,
+                          'disabled_anime': JobStatus.UNKNOWN,
+                          'grey':           JobStatus.UNKNOWN,
+                          'grey_anime':     JobStatus.UNKNOWN,
+                          'notbuilt':       JobStatus.UNKNOWN,
+                          'notbuilt_anime': JobStatus.UNKNOWN,
+                          'red':            JobStatus.FAILING,
+                          'red_anime':      JobStatus.FAILING,
+                          'yellow':         JobStatus.FAILING,
+                          'yellow_anime':   JobStatus.FAILING,
                           }
 
     def listJobs(self):
