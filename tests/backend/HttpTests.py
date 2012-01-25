@@ -60,3 +60,29 @@ class HttpTests(TestCase):
         http.request('path', arguments, postData)
 
         mox.Verify(request)
+
+    def test_request_NoUsername_AuthenticationNotSet(self):
+
+        expectedResult = ("text", 123)
+        arguments = { 'something' : 'whatever' }
+        postData = 'blah blah'
+        server = Server('host', '', 'password anyway')
+
+        mocks= mox.Mox()
+        urlBuilder= mocks.CreateMock(IUrlBuilder)
+        urlBuilderFactory= mocks.CreateMock(IUrlBuilderFactory)
+        request= mocks.CreateMock(IRequest)
+        requestFactory= mocks.CreateMock(IRequestFactory)
+
+        urlBuilderFactory.create().AndReturn(urlBuilder)
+        urlBuilder.build('host', 'path', arguments).AndReturn('full url')
+
+        requestFactory.create('full url').AndReturn(request)
+        request.open(postData).AndReturn(expectedResult)
+
+        mocks.ReplayAll()
+
+        http= Http(server, urlBuilderFactory, requestFactory)
+        http.request('path', arguments, postData)
+
+        mox.Verify(request)

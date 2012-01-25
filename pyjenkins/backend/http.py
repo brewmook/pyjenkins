@@ -27,6 +27,7 @@ class Http(IHttp):
         url= builder.build(self.server.host, path, arguments)
 
         req= self.requestFactory.create(url)
-        req.setBasicAuthorisation(self.server.username, self.server.password)
+        if self.server.username is not '':
+            req.setBasicAuthorisation(self.server.username, self.server.password)
 
         return req.open(postData)
