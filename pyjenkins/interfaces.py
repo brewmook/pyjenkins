@@ -44,22 +44,6 @@ class IConfigurationFactory(object):
         @rtype: pyjenkins.interfaces.IConfiguration
         """
 
-class IEvent(object):
-    """
-    Inspired by code by Peter Thatcher found at
-    http://www.valuedlessons.com/2008/04/events-in-python.html
-    """
-
-    def register(self, handler):
-        """
-        @arg handler: Callable
-        """
-
-    def fire(self, *args, **kargs):
-        """
-        Calls all registered handlers with given arguments.
-        """
-
 class IJenkins(object):
 
     def listJobs(self):

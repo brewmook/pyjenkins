@@ -5,7 +5,6 @@ import sys
 import os
 
 from tests.ConfigurationTests import ConfigurationTests
-from tests.EventTests import EventTests
 from tests.JenkinsTests import JenkinsTests
 from tests.JobTests import JobTests
 from tests.ServerTests import ServerTests
