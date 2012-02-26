@@ -29,20 +29,20 @@ class Jenkins(IJenkins):
                           'yellow_anime':   JobStatus.FAILING,
                           }
 
-    def listJobs(self):
+    def list_jobs(self):
         """
         @return: list of Jobs
         @rtype: [pyjenkins.job.Job]
         """
         result= None
-        jobs= self._getJsonJobs({'tree':'jobs[name,color]'})
+        jobs= self._get_json_jobs({'tree':'jobs[name,color]'})
 
         if jobs is not None:
             result= [Job(job['name'], self.statusMap[job['color']]) for job in jobs]
 
         return result
 
-    def _getJsonJobs(self, parameters):
+    def _get_json_jobs(self, parameters):
         result= None
         (json, status) = self.http.request('api/json', parameters)
 

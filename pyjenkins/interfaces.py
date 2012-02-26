@@ -46,7 +46,7 @@ class IConfigurationFactory(object):
 
 class IJenkins(object):
 
-    def listJobs(self):
+    def list_jobs(self):
         """
         @return: list of Jobs
         @rtype: [pyjenkins.job.Job]
