@@ -42,6 +42,15 @@ class Jenkins(object):
 
         return result
 
+    def disable_job(self, job_name):
+        """
+        @type job_name: str
+        @return: True on success, False if something went wrong.
+        @rtype: bool
+        """
+        (json, status) = self.http.request('job/%s/disable' % job_name)
+        return status == HttpStatus.OK
+
     def _get_json_jobs(self, parameters):
         result= None
         (json, status) = self.http.request('api/json', parameters)

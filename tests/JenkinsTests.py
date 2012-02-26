@@ -14,6 +14,8 @@ class JenkinsTests(TestCase):
         self.http= self.mocks.CreateMock(IHttp)
         self.json= self.mocks.CreateMock(IJsonParser)
 
+    # Test list_jobs()
+
     def test__list_jobs__HttpRequestNotOk_ReturnNone(self):
 
         self.http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('whatever', HttpStatus.NOT_FOUND))
@@ -66,3 +68,25 @@ class JenkinsTests(TestCase):
                           Job('terry', JobStatus.DISABLED)]
 
         self.assertEqual(expectedResult, result)
+
+    # Test disable_job()
+
+    def test__disable_job__HttpRequestNotOk_ReturnFalse(self):
+
+        self.http.request('job/some job/disable').AndReturn(('whatever', HttpStatus.NOT_FOUND))
+        self.mocks.ReplayAll()
+
+        jenkins = Jenkins(self.http, self.json)
+        result = jenkins.disable_job('some job')
+
+        self.assertEqual(False, result)
+
+    def test__disable_job__HttpRequestOk_ReturnTrue(self):
+
+        self.http.request('job/other job/disable').AndReturn(('whatever', HttpStatus.OK))
+        self.mocks.ReplayAll()
+
+        jenkins = Jenkins(self.http, self.json)
+        result = jenkins.disable_job('other job')
+
+        self.assertEqual(True, result)
