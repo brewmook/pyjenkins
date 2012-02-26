@@ -90,3 +90,25 @@ class JenkinsTests(TestCase):
         result = jenkins.disable_job('other job')
 
         self.assertEqual(True, result)
+
+    # Test enable_job()
+
+    def test__enable_job__HttpRequestNotOk_ReturnFalse(self):
+
+        self.http.request('job/some job/enable').AndReturn(('whatever', HttpStatus.NOT_FOUND))
+        self.mocks.ReplayAll()
+
+        jenkins = Jenkins(self.http, self.json)
+        result = jenkins.enable_job('some job')
+
+        self.assertEqual(False, result)
+
+    def test__enable_job__HttpRequestOk_ReturnTrue(self):
+
+        self.http.request('job/other job/enable').AndReturn(('whatever', HttpStatus.OK))
+        self.mocks.ReplayAll()
+
+        jenkins = Jenkins(self.http, self.json)
+        result = jenkins.enable_job('other job')
+
+        self.assertEqual(True, result)
