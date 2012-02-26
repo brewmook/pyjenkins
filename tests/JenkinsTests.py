@@ -68,7 +68,8 @@ class JenkinsTests(TestCase):
         http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         json.parse('json response').AndReturn({'jobs':[{'name':'graham', 'color':'red'},
                                                        {'name':'john', 'color':'blue'},
-                                                       {'name':'eric', 'color':'grey'}
+                                                       {'name':'eric', 'color':'grey'},
+                                                       {'name':'terry', 'color':'disabled'},
                                                        ]})
         mocks.ReplayAll()
 
@@ -77,6 +78,7 @@ class JenkinsTests(TestCase):
         result= jenkins.listJobs()
         expectedResult= [Job('graham', JobStatus.FAILING),
                          Job('john', JobStatus.OK),
-                         Job('eric', JobStatus.UNKNOWN)]
+                         Job('eric', JobStatus.UNKNOWN),
+                         Job('terry', JobStatus.DISABLED)]
 
         self.assertEqual(expectedResult, result)

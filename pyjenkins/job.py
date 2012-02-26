@@ -1,6 +1,7 @@
 class JobStatus(object):
-    OK = "OK"
+    DISABLED = "DISABLED"
     FAILING = "FAILING"
+    OK = "OK"
     UNKNOWN = "UNKNOWN"
 
 class Job(object):
