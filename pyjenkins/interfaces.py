@@ -44,18 +44,10 @@ class IConfigurationFactory(object):
         @rtype: pyjenkins.interfaces.IConfiguration
         """
 
-class IJenkins(object):
-
-    def list_jobs(self):
-        """
-        @return: list of Jobs
-        @rtype: [pyjenkins.job.Job]
-        """
-
 class IJenkinsFactory(object):
 
     def create(self, server):
         """
         @type server: pyjenkins.server.Server
-        @rtype: pyjenkins.interfaces.IJenkins
+        @rtype: pyjenkins.jenkins.Jenkins
         """
