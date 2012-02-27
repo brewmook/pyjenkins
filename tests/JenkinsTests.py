@@ -73,7 +73,7 @@ class JenkinsTests(TestCase):
 
     def test__disable_job__HttpRequestNotOk_ReturnFalse(self):
 
-        self.http.request('job/some job/disable').AndReturn(('whatever', HttpStatus.NOT_FOUND))
+        self.http.request('job/some job/disable', postData='').AndReturn(('whatever', HttpStatus.NOT_FOUND))
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -83,7 +83,7 @@ class JenkinsTests(TestCase):
 
     def test__disable_job__HttpRequestOk_ReturnTrue(self):
 
-        self.http.request('job/other job/disable').AndReturn(('whatever', HttpStatus.OK))
+        self.http.request('job/other job/disable', postData='').AndReturn(('whatever', HttpStatus.OK))
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -95,7 +95,7 @@ class JenkinsTests(TestCase):
 
     def test__enable_job__HttpRequestNotOk_ReturnFalse(self):
 
-        self.http.request('job/some job/enable').AndReturn(('whatever', HttpStatus.NOT_FOUND))
+        self.http.request('job/some job/enable', postData='').AndReturn(('whatever', HttpStatus.NOT_FOUND))
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -105,7 +105,7 @@ class JenkinsTests(TestCase):
 
     def test__enable_job__HttpRequestOk_ReturnTrue(self):
 
-        self.http.request('job/other job/enable').AndReturn(('whatever', HttpStatus.OK))
+        self.http.request('job/other job/enable', postData='').AndReturn(('whatever', HttpStatus.OK))
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)

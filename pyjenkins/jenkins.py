@@ -48,7 +48,7 @@ class Jenkins(object):
         @return: True on success, False if something went wrong.
         @rtype: bool
         """
-        (json, status) = self.http.request('job/%s/disable' % job_name)
+        (json, status) = self.http.request('job/%s/disable' % job_name, postData='')
         return status == HttpStatus.OK
 
     def enable_job(self, job_name):
@@ -57,7 +57,7 @@ class Jenkins(object):
         @return: True on success, False if something went wrong.
         @rtype: bool
         """
-        (json, status) = self.http.request('job/%s/enable' % job_name)
+        (json, status) = self.http.request('job/%s/enable' % job_name, postData='')
         return status == HttpStatus.OK
 
     def _get_json_jobs(self, parameters):
