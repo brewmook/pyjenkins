@@ -26,7 +26,7 @@ class HttpTests(TestCase):
 
         requestFactory.create('full url').AndReturn(request)
         request.setBasicAuthorisation(mox.IgnoreArg(), mox.IgnoreArg()).InAnyOrder()
-        request.open(postData).InAnyOrder().AndReturn(expectedResult)
+        request.request(postData).InAnyOrder().AndReturn(expectedResult)
 
         mocks.ReplayAll()
 
@@ -53,7 +53,7 @@ class HttpTests(TestCase):
 
         requestFactory.create('full url').AndReturn(request)
         request.setBasicAuthorisation('username', 'password')
-        request.open(postData).AndReturn(expectedResult)
+        request.request(postData).AndReturn(expectedResult)
 
         mocks.ReplayAll()
 
@@ -79,7 +79,7 @@ class HttpTests(TestCase):
         urlBuilder.build('host', 'path', arguments).AndReturn('full url')
 
         requestFactory.create('full url').AndReturn(request)
-        request.open(postData).AndReturn(expectedResult)
+        request.request(postData).AndReturn(expectedResult)
 
         mocks.ReplayAll()
 

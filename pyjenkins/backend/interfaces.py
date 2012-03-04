@@ -31,7 +31,7 @@ class IRequest(object):
         @type password: str
         """
 
-    def open(self, postData=None):
+    def request(self, postData=None):
         """
         @param postData: data to be sent via POST method. Default is to send via GET.
         @type  postData: str

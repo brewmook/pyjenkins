@@ -19,7 +19,7 @@ class Urllib2Request(IRequest):
 
         self.request.add_header('Authorization', authorisation)
 
-    def open(self, postData=None):
+    def request(self, postData=None):
 
         try:
             response = urllib2.urlopen(self.request, data=postData)

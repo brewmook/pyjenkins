@@ -32,4 +32,4 @@ class Http(IHttp):
         if self.server.username is not '':
             req.setBasicAuthorisation(self.server.username, self.server.password)
 
-        return req.open(postData)
+        return req.request(postData)
