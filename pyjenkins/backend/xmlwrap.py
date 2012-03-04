@@ -2,6 +2,7 @@ from xml.etree import ElementTree
 
 from pyjenkins.backend.interfaces import IXml, IXmlFactory
 
+
 class Xml(IXml):
 
     def __init__(self, rawXmlString):
@@ -15,24 +16,25 @@ class Xml(IXml):
 
     def getFirstNodeText(self, xpath):
 
-        result= None
+        result = None
         element = self.tree.find(xpath)
 
         if element is not None:
-            result= element.text
+            result = element.text
 
         return result
 
     def setFirstNodeText(self, xpath, text):
 
-        result= False
+        result = False
         element = self.tree.find(xpath)
 
         if element is not None:
             element.text = text
-            result= True
+            result = True
 
         return result
+
 
 class XmlFactory(IXmlFactory):
 

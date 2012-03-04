@@ -12,6 +12,7 @@ class IHttp(object):
         @rtype: (str, int)
         """
 
+
 class IJsonParser(object):
 
     def parse(self, jsonString):
@@ -20,6 +21,7 @@ class IJsonParser(object):
         @type jsonString: str
         @rtype: dict
         """
+
 
 class IRequest(object):
 
@@ -37,6 +39,7 @@ class IRequest(object):
         @rtype: (str, int)
         """
 
+
 class IRequestFactory(object):
 
     def create(self, url):
@@ -44,6 +47,7 @@ class IRequestFactory(object):
         @type url: str
         @rtype: pyjenkins.interfaces.IRequest
         """
+
 
 class IUrlBuilder(object):
 
@@ -59,12 +63,14 @@ class IUrlBuilder(object):
         @rtype: str
         """
 
+
 class IUrlBuilderFactory(object):
 
     def create(self):
         """
         @rtype: pyjenkins.interfaces.IUrlBuilder
         """
+
 
 class IXml(object):
 
@@ -89,6 +95,7 @@ class IXml(object):
 
         Returns True if a node was found, False otherwise.
         """
+
 
 class IXmlFactory(object):
 

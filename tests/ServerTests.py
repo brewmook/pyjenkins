@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from pyjenkins.server import Server
 
+
 class ServerTests(TestCase):
 
     def test_constructor_HostAttributeMatchesThatPassedIn(self):

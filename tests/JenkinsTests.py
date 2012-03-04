@@ -6,20 +6,21 @@ from pyjenkins.backend.interfaces import IHttp, IJsonParser
 from pyjenkins.jenkins import Jenkins
 from pyjenkins.job import Job, JobStatus
 
+
 class JenkinsTests(TestCase):
 
     def setUp(self):
 
         self.mocks = mox.Mox()
-        self.http= self.mocks.CreateMock(IHttp)
-        self.json= self.mocks.CreateMock(IJsonParser)
+        self.http = self.mocks.CreateMock(IHttp)
+        self.json = self.mocks.CreateMock(IJsonParser)
 
     # Test list_jobs()
 
     def test__list_jobs__HttpRequestNotOk_ReturnNone(self):
 
         self.http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('whatever', HttpStatus.NOT_FOUND))
-        self.json.parse('whatever').AndReturn({'pies':3})
+        self.json.parse('whatever').AndReturn({'pies': 3})
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -30,7 +31,7 @@ class JenkinsTests(TestCase):
     def test__list_jobs__JsonResultHasNoJobsElement_ReturnNone(self):
 
         self.http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
-        self.json.parse('json response').AndReturn({'pies':3})
+        self.json.parse('json response').AndReturn({'pies': 3})
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -41,7 +42,7 @@ class JenkinsTests(TestCase):
     def test__list_jobs__JsonResultContainsEmptyJobsList_ReturnEmptyList(self):
 
         self.http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
-        self.json.parse('json response').AndReturn({'jobs':[]})
+        self.json.parse('json response').AndReturn({'jobs': []})
         self.mocks.ReplayAll()
 
         jenkins = Jenkins(self.http, self.json)
@@ -51,11 +52,11 @@ class JenkinsTests(TestCase):
 
     def test__list_jobs__JsonResultContainsSomeJobs_ReturnListOfJobs(self):
 
-        json_parsed = {'jobs':[{'name':'graham', 'color':'red'},
-                               {'name':'john', 'color':'blue'},
-                               {'name':'eric', 'color':'grey'},
-                               {'name':'terry', 'color':'disabled'},
-                               ]}
+        json_parsed = {'jobs': [{'name':'graham', 'color':'red'},
+                                {'name':'john', 'color':'blue'},
+                                {'name':'eric', 'color':'grey'},
+                                {'name':'terry', 'color':'disabled'},
+                                ]}
         self.http.request('api/json', {'tree': 'jobs[name,color]'}).AndReturn(('json response', HttpStatus.OK))
         self.json.parse('json response').AndReturn(json_parsed)
         self.mocks.ReplayAll()

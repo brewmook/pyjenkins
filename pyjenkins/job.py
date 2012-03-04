@@ -4,6 +4,7 @@ class JobStatus(object):
     OK = "OK"
     UNKNOWN = "UNKNOWN"
 
+
 class Job(object):
 
     def __init__(self, name, status):

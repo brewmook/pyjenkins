@@ -6,10 +6,11 @@ SUBVERSION_REPOSITORY_XPATH = './/hudson.scm.SubversionSCM_-ModuleLocation/remot
 CHILD_PROJECTS_XPATH = './/hudson.tasks.BuildTrigger/childProjects'
 COPY_ARTIFACTS_JOB_NAME_XPATH = './/hudson.plugins.copyartifact.CopyArtifact/projectName'
 
+
 class Configuration(IConfiguration):
 
     def __init__(self, aXml):
-        self.xml= aXml
+        self.xml = aXml
 
     def rawXml(self):
         return self.xml.toString()
@@ -25,6 +26,7 @@ class Configuration(IConfiguration):
 
     def setCopyArtifactsJobName(self, jobName):
         return self.xml.setFirstNodeText(COPY_ARTIFACTS_JOB_NAME_XPATH, jobName)
+
 
 class ConfigurationFactory(IConfigurationFactory):
 

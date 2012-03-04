@@ -36,6 +36,7 @@ class IConfiguration(object):
         @rtype: bool
         """
 
+
 class IConfigurationFactory(object):
 
     def create(self, rawXml):
@@ -43,6 +44,7 @@ class IConfigurationFactory(object):
         @type rawXml: str
         @rtype: pyjenkins.interfaces.IConfiguration
         """
+
 
 class IJenkinsFactory(object):
 

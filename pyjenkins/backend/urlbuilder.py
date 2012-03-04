@@ -1,6 +1,7 @@
 import urllib
 from pyjenkins.backend.interfaces import IUrlBuilder, IUrlBuilderFactory
 
+
 class UrlBuilder(IUrlBuilder):
 
     def __init__(self):
@@ -8,12 +9,13 @@ class UrlBuilder(IUrlBuilder):
 
     def build(self, host, path, arguments=None):
 
-        url= '%s/%s' % (host, urllib.quote(path))
+        url = '%s/%s' % (host, urllib.quote(path))
 
         if arguments:
-            url= '?'.join([url, urllib.urlencode(arguments)])
-            
+            url = '?'.join([url, urllib.urlencode(arguments)])
+
         return url
+
 
 class UrlBuilderFactory(IUrlBuilderFactory):
 
